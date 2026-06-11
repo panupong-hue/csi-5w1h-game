@@ -1,5 +1,5 @@
 // ==========================================
-// 1. ฐานข้อมูลคดี 30 ข้อ (แก้ไข ID ข้อ 30 และตรวจสอบข้อมูลเรียบร้อย)
+// 1. ฐานข้อมูลคดี 30 ข้อ (โครงสร้างสมบูรณ์)
 // ==========================================
 const caseBank = [
     { 
@@ -452,7 +452,7 @@ const caseBank = [
     },
     { 
         id: 29, 
-        text: "ณ ห้องส่วนกลางนิติบุคคล ในช่วงเทศกาลมหกรรมลดราคาออนไลน์กระหน่ำแอปพลิเคชัน ความโกลาหลของสินค้าพัสดุตกค้างกองล้นทะลัก สูญหาย และใช้เวลาหาไม่เจอนานกว่า 30 นาที ได้สร้างความหงุดหงิดใจให้แก่ผู้อยู่อาศัยในโครงการอาคารชุดคอนโดมิเนียม เพราะปัญหากล่องกระดาษและพลาสติกห่อหุ้มซ้อนกันหนาแน่นจนบดบังป้ายกำกับชื่อตัวอักษรบนหน้ากล่อง", 
+        text: "ณ ห้องส่วนกลางนิติบุคคล ในช่วงเทศกาลมหกรรมลดราคาออนไลน์กระหน่ำแอปพลิเคชัน ความโกลาหลของสินค้าพัสดุตกค้างกองล้นทะลัก สูญหาย และใช้เวลาหาไม่เจอนานกว่า 30 นาที ได้สร้างความหงุดหงิดใจให้แก่ผูอยู่อาศัยในโครงการอาคารชุดคอนโดมิเนียม เพราะปัญหากล่องกระดาษและพลาสติกห่อหุ้มซ้อนกันหนาแน่นจนบดบังป้ายกำกับชื่อตัวอักษรบนหน้ากล่อง", 
         targets: { 
             who: "ผู้อยู่อาศัยในโครงการอาคารชุดคอนโดมิเนียม", 
             what: "ความโกลาหลของสินค้าพัสดุตกค้างกองล้นทะลัก สูญหาย และใช้เวลาหาไม่เจอนานกว่า 30 นาที", 
@@ -489,14 +489,11 @@ const caseBank = [
 // ==========================================
 let selectedCases = [];
 let currentCaseIndex = 0;
-let currentPhase = 1; // เฟส 1 = ไฮไลต์เนื้อเรื่อง, เฟส 2 = ตอบคำถามวิศวกรรม
-let score = 0;        // ดาวรวมสะสมสูงสุด 30 ดวง (10 คดี คดีละ 3 ดาว)
-let currentTool = ""; // เก็บค่าปากกาไฮไลต์ที่เลือก ('who', 'what', 'when', 'where', 'why')
-
-// ข้อมูลคำตอบที่เด็กเลือกทำการลากไฮไลต์จับคู่ในคดีนั้น ๆ
+let currentPhase = 1; 
+let score = 0;        
+let currentTool = ""; 
 let currentEvidence = { who: "", what: "", when: "", where: "", why: "" };
 
-// สไตล์คลาสสีของไฮไลต์ (Tailwind CSS บันทึกตรงกับประเภทเครื่องมือ)
 const toolStyles = {
     who: { bg: 'bg-sky-400/30', text: 'text-sky-400', border: 'border-sky-400' },
     what: { bg: 'bg-red-400/30', text: 'text-red-400', border: 'border-red-400' },
@@ -506,75 +503,70 @@ const toolStyles = {
 };
 
 // ==========================================
-// 3. ระบบฟังก์ชันตรรกะควบคุมเกม (Game Logic Functions)
+// 3. ระบบฟังก์ชันหลัก (Game Core Logic)
 // ==========================================
 
-// ฟังก์ชันเริ่มปฏิบัติการ (เรียกใช้งานเมื่อกดปุ่มบนหน้า HTML)
 function startGame() {
     score = 0;
     currentCaseIndex = 0;
     currentPhase = 1;
     currentTool = "";
+    currentEvidence = { who: "", what: "", when: "", where: "", why: "" };
     
-    // สุ่มสลับคดีและคัดเลือกมาเล่น 10 คดีตามโจทย์ HTML
+    // สุ่มคดี 10 ข้อ
     selectedCases = [...caseBank].sort(() => 0.5 - Math.random()).slice(0, 10);
 
-    // ควบคุมสลับหน้าจอแสดงผล
-    document.getElementById("start-screen").classList.add("hidden");
-    document.getElementById("end-screen").classList.add("hidden");
-    document.getElementById("game-screen").classList.remove("hidden");
+    safelyToggleDisplay("start-screen", false);
+    safelyToggleDisplay("end-screen", false);
+    safelyToggleDisplay("game-screen", true);
 
     loadCase();
 }
 
-// ฟังก์ชันโหลดข้อมูลคดีปัจจุบันขึ้นสู่ UI
 function loadCase() {
     currentPhase = 1;
     currentTool = "";
     currentEvidence = { who: "", what: "", when: "", where: "", why: "" };
     
-    // รีเซ็ตหน้าสมุดบันทึกบนหน้าจอ
     resetNotebookUI();
     
     const currentCase = selectedCases[currentCaseIndex];
+    if (!currentCase) return;
+
+    safelySetText("case-number", `📂 คดีที่ ${currentCaseIndex + 1} / 10`);
+    safelySetText("current-stars", `⭐ ดาวในคดีนี้: 3`);
+    safelySetText("case-text-box", currentCase.text);
     
-    // แสดงความคืบหน้าลำดับคดี
-    document.getElementById("case-number").innerText = `📂 คดีที่ ${currentCaseIndex + 1} / 10`;
-    document.getElementById("current-stars").innerText = `⭐ ดาวในคดีนี้: 3`;
-    document.getElementById("feedback-message").innerText = "";
-    document.getElementById("feedback-message").className = "mt-4 p-3 rounded text-center text-sm font-bold min-h-[44px]";
+    const feedback = document.getElementById("feedback-message");
+    if (feedback) {
+        feedback.innerText = "";
+        feedback.className = "mt-4 p-3 rounded text-center text-sm font-bold min-h-[44px]";
+    }
 
-    // นำเนื้อความคดีมาบรรจุลงกล่องข้อความ
-    const textBox = document.getElementById("case-text-box");
-    textBox.innerText = currentCase.text;
+    safelyToggleDisplay("phase2-box", false);
+    safelyToggleDisplay("btn-next-case", false);
 
-    // ซ่อนกล่องเฟส 2 และปุ่มถัดไปชั่วคราว
-    document.getElementById("phase2-box").classList.add("hidden");
-    document.getElementById("btn-next-case").classList.add("hidden");
-
-    // ล้างสถานะสีขอบของปุ่มเลือกเครื่องมือทั้งหมด
     resetToolButtons();
     
-    // เชื่อมต่อ Event การดักจับลากเมาส์ไฮไลต์ข้อความ
-    textBox.removeEventListener("mouseup", handleTextSelection);
-    textBox.addEventListener("mouseup", handleTextSelection);
+    const textBox = document.getElementById("case-text-box");
+    if (textBox) {
+        textBox.removeEventListener("mouseup", handleTextSelection);
+        textBox.addEventListener("mouseup", handleTextSelection);
+    }
 }
 
-// ฟังก์ชันเลือกประเภทเครื่องมือปากกาไฮไลต์
 function setTool(toolName) {
-    if (currentPhase !== 1) return; // หากผ่านเข้าเฟส 2 แล้ว จะเลือกแก้ไขไฮไลต์ไม่ได้
+    if (currentPhase !== 1) return;
     currentTool = toolName;
     resetToolButtons();
     
-    // เปลี่ยนสถานะปุ่มที่ถูกเลือกให้เป็นสีเข้มชัดเจน
     const activeBtn = document.getElementById(`btn-${toolName}`);
     if (activeBtn) {
-        activeBtn.classList.remove("hover:bg-opacity-10");
         activeBtn.className = `p-3 rounded-lg font-bold border-2 ${toolStyles[toolName].border} ${toolStyles[toolName].bg} ${toolStyles[toolName].text} cursor-pointer transition scale-95`;
     }
 }
 
-// ฟังก์ชันจัดการตรรกะเมื่อผู้เรียนลากไฮไลต์ข้อความ (Text Selection)
+// ✨ อัปเกรดฟังก์ชันฝังไฮไลท์สีค้างไว้บนหน้าจอแบบสมบูรณ์
 function handleTextSelection() {
     if (!currentTool) {
         alert("🚨 กรุณาเลือกเครื่องมือปากกาไฮไลต์ (ด้านล่าง) ก่อนลากครอบข้อความครับ!");
@@ -585,114 +577,123 @@ function handleTextSelection() {
     const selectedText = selection.toString().trim();
 
     if (selectedText.length > 0) {
-        // บันทึกคำที่เลือกลงระบบจำลองหลักฐาน
-        currentEvidence[currentTool] = selectedText;
-        
-        // อัปเดตลงสมุดบันทึกหลักฐานฝั่งขวาบน UI
-        const noteElement = document.getElementById(`note-${currentTool}`);
-        noteElement.innerText = selectedText;
-        noteElement.className = `${toolStyles[currentTool].text} font-semibold break-words`;
+        const range = selection.getRangeAt(0);
+        const container = document.getElementById("case-text-box");
 
-        // ล้างแถบสีฟ้าปกติของ Browser หลังลากเสร็จ
-        selection.removeAllRanges();
+        // ตรวจสอบความปลอดภัยว่าเป็นการลากในกล่องเนื้อความเท่านั้น
+        if (container && (container.contains(range.commonAncestorContainer) || container === range.commonAncestorContainer)) {
+            
+            // 1. บันทึกข้อความลงตัวแปรตรวจคะแนน
+            currentEvidence[currentTool] = selectedText;
+            
+            // 2. อัปเดตข้อมูลแสดงผลที่สมุดฝั่งขวา
+            const noteElement = document.getElementById(`note-${currentTool}`);
+            if (noteElement) {
+                noteElement.innerText = selectedText;
+                noteElement.className = `${toolStyles[currentTool].text} font-semibold break-words`;
+            }
 
-        // ตรวจสอบโครงสร้างว่าสกัดข้อมูลครบ 5W หรือยัง
-        checkPhase1Completion();
+            // 3. ฝังแท็กสร้างสีไฮไลท์ค้างบนเบราว์เซอร์
+            const mark = document.createElement("mark");
+            let bgClass = toolStyles[currentTool].bg;
+            let textClass = toolStyles[currentTool].text;
+            mark.className = `${bgClass} ${textClass} rounded px-1 font-medium transition-all duration-200`;
+            
+            try {
+                range.surroundContents(mark);
+            } catch (e) {
+                console.log("ลากไฮไลต์ซ้อนตำแหน่งเดิม");
+            }
+
+            selection.removeAllRanges();
+            checkPhase1Completion();
+        }
     }
 }
 
-// ตรวจสอบว่าผู้เรียนจับข้อมูล 5W ครบทุกช่องหรือยังเพื่อปลดล็อกเฟส 2 ควิซคำถาม
 function checkPhase1Completion() {
     const isComplete = currentEvidence.who && currentEvidence.what && currentEvidence.when && currentEvidence.where && currentEvidence.why;
-    
     if (isComplete) {
-        // ประเมินผลให้คะแนนเฟส 1 ไฮไลต์ (ตรวจเช็กคำค้นหาความแม่นยำในเป้าหมาย)
         evaluatePhase1();
     }
 }
 
-// ฟังก์ชันคำนวณและประเมินผลการลากไฮไลต์เชิงวิชาการ
 function evaluatePhase1() {
     const currentCase = selectedCases[currentCaseIndex];
     let correctCount = 0;
 
-    // ระบบเปรียบเทียบคำหลัก (หากมีคำระบุเป้าหมายอย่างน้อย 50% ของคีย์เวิร์ดเฉลย ถือว่าถูกต้อง)
     const keys = ['who', 'what', 'when', 'where', 'why'];
     keys.forEach(key => {
         const userAns = currentEvidence[key].toLowerCase();
         const targetAns = currentCase.targets[key].toLowerCase();
-        if (targetAns.includes(userAns) || userAns.includes(targetAns) || similarityScore(userAns, targetAns) > 0.4) {
+        if (targetAns.includes(userAns) || userAns.includes(targetAns)) {
             correctCount++;
         }
     });
 
     const feedback = document.getElementById("feedback-message");
-    
-    if (correctCount >= 4) { // ลากถูกอย่างน้อย 4 ใน 5 จุด
-        score += 2; // ได้รับ 2 ดาวจากเฟสไฮไลต์
-        feedback.innerText = "✅ วิเคราะห์หลักฐาน 5W สำเร็จ! ได้รับพลังการสืบสวน ⭐⭐";
-        feedback.className = "mt-4 p-3 rounded text-center text-sm font-bold min-h-[44px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30";
-    } else {
-        score += 1; // ลากหลุดเกณฑ์ ได้รับประเมินขั้นพื้นฐาน 1 ดาว
-        feedback.innerText = "🔍 รวบรวมเบาะแสเสร็จสิ้น (มีบางจุดคลาดเคลื่อนจากคำให้การ) ได้รับ ⭐";
-        feedback.className = "mt-4 p-3 rounded text-center text-sm font-bold min-h-[44px] bg-amber-500/20 text-amber-400 border border-amber-500/30";
+    if (feedback) {
+        if (correctCount >= 4) {
+            score += 2;
+            feedback.innerText = "✅ วิเคราะห์หลักฐาน 5W สำเร็จ! ได้รับพลังการสืบสวน ⭐⭐";
+            feedback.className = "mt-4 p-3 rounded text-center text-sm font-bold min-h-[44px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30";
+        } else {
+            score += 1;
+            feedback.innerText = "🔍 รวบรวมเบาะแสเสร็จสิ้น (มีบางจุดคลาดเคลื่อนจากคำให้การ) ได้รับ ⭐";
+            feedback.className = "mt-4 p-3 rounded text-center text-sm font-bold min-h-[44px] bg-amber-500/20 text-amber-400 border border-amber-500/30";
+        }
     }
 
-    // ปลดล็อกเปิดกระดานเฟส 2 ควิซประเมินแนวทางแก้ไขปัญหาเชิงวิศวกรรม
     openPhase2();
 }
 
-// เปิดแสดงกล่องข้อสอบวิศวกรรม (Phase 2)
 function openPhase2() {
     currentPhase = 2;
     const currentCase = selectedCases[currentCaseIndex];
     
-    document.getElementById("phase2-box").classList.remove("hidden");
-    document.getElementById("quiz-question").innerText = currentCase.quiz.q;
+    safelyToggleDisplay("phase2-box", true);
+    safelySetText("quiz-question", currentCase.quiz.q);
     
     const optionsContainer = document.getElementById("quiz-options");
-    optionsContainer.innerHTML = "";
-
-    // เจนเนอเรตปุ่มคำตอบ 3 ตัวเลือกตามโครงสร้าง HTML
-    currentCase.quiz.a.forEach((optionText, index) => {
-        const btn = document.createElement("button");
-        btn.innerText = `${index + 1}. ${optionText}`;
-        btn.className = "w-full text-left p-3 rounded bg-slate-800 border border-slate-700 hover:bg-slate-700 transition cursor-pointer text-sm leading-relaxed";
-        btn.onclick = () => selectQuizAnswer(index, currentCase.quiz.correct);
-        optionsContainer.appendChild(btn);
-    });
+    if (optionsContainer) {
+        optionsContainer.innerHTML = "";
+        currentCase.quiz.a.forEach((optionText, index) => {
+            const btn = document.createElement("button");
+            btn.innerText = `${index + 1}. ${optionText}`;
+            btn.className = "w-full text-left p-3 rounded bg-slate-800 border border-slate-700 hover:bg-slate-700 transition cursor-pointer text-sm leading-relaxed text-slate-200";
+            btn.onclick = () => selectQuizAnswer(index, currentCase.quiz.correct);
+            optionsContainer.appendChild(btn);
+        });
+    }
 }
 
-// ตรวจสอบการเลือกตอบข้อสอบควิซวิศวกรรม
 function selectQuizAnswer(selectedIndex, correctIndex) {
-    const options = document.getElementById("quiz-options").children;
+    const optionsContainer = document.getElementById("quiz-options");
+    if (!optionsContainer) return;
+    const options = optionsContainer.children;
     
-    // ล็อกปุ่มป้องกันการกดเปลี่ยนใจซ้ำ
     for (let btn of options) {
         btn.disabled = true;
         btn.classList.remove("hover:bg-slate-700");
     }
 
     const feedback = document.getElementById("feedback-message");
-    
     if (selectedIndex === correctIndex) {
-        score += 1; // ตอบคำถามแก้ปัญหาได้ตรงจุดรับดาวเพิ่มอีก 1 ดวงรวมเป็น 3 ดวงในข้อนั้น
+        score += 1;
         options[selectedIndex].className = "w-full text-left p-3 rounded bg-emerald-500/20 border-2 border-emerald-500 text-emerald-300 font-bold text-sm leading-relaxed";
-        feedback.innerText = "🎯 ยอดเยี่ยม! แนวทางวิศวกรรมตรงจุดเผชิญหน้ากับต้นตอปัญหา ได้รับเพิ่ม ⭐";
+        if (feedback) feedback.innerText = "🎯 ยอดเยี่ยม! แนวทางวิศวกรรมตรงจุดเผชิญหน้ากับต้นตอปัญหา ได้รับเพิ่ม ⭐";
     } else {
         options[selectedIndex].className = "w-full text-left p-3 rounded bg-red-500/20 border-2 border-red-500 text-red-300 text-sm leading-relaxed";
-        options[correctIndex].className = "w-full text-left p-3 rounded bg-emerald-500/10 border border-emerald-500/50 text-emerald-400 font-bold text-sm leading-relaxed";
-        feedback.innerText = "❌ เลือกแนวทางแก้ไขไม่ตรงจุดวิศวกรรม (ไม่ได้ดาวเพิ่มในเฟสนี้)";
+        if (options[correctIndex]) {
+            options[correctIndex].className = "w-full text-left p-3 rounded bg-emerald-500/10 border border-emerald-500/50 text-emerald-400 font-bold text-sm leading-relaxed";
+        }
+        if (feedback) feedback.innerText = "❌ เลือกแนวทางแก้ไขไม่ตรงจุดวิศวกรรม (ไม่ได้ดาวเพิ่มในเฟสนี้)";
     }
 
-    // แสดงคะแนนดาวรวมเรียลไทม์หลังอัปเดตดาวดวงที่ 3
-    document.getElementById("current-stars").innerText = `⭐ คะแนนรวมสะสมปัจจุบัน: ${score}`;
-    
-    // ปลดล็อกเปิดปุ่มให้ก้าวไปสู่คดีถัดไปได้
-    document.getElementById("btn-next-case").classList.remove("hidden");
+    safelySetText("current-stars", `⭐ คะแนนรวมสะสมปัจจุบัน: ${score}`);
+    safelyToggleDisplay("btn-next-case", true);
 }
 
-// ดำเนินการย้ายหน้าขยับไปคดีถัดไป หรือสรุปจบเกม
 function nextCase() {
     currentCaseIndex++;
     if (currentCaseIndex < 10) {
@@ -702,48 +703,53 @@ function nextCase() {
     }
 }
 
-// สรุปปิดคดีภารกิจ คำนวณอันดับยศตามเงื่อนไขผ่านเกณฑ์ผู้บริหารดาวโรงเรียน
 function endGame() {
-    document.getElementById("game-screen").classList.add("hidden");
-    const endScreen = document.getElementById("end-screen");
-    endScreen.classList.remove("hidden");
+    safelyToggleDisplay("game-screen", false);
+    safelyToggleDisplay("end-screen", true);
 
-    document.getElementById("end-total-stars").innerText = `${score} / 30 ดวง`;
+    safelySetText("end-total-stars", `${score} / 30 ดวง`);
 
     const endTitle = document.getElementById("end-title");
     const endRank = document.getElementById("end-rank");
     const evaluationMsg = document.getElementById("end-evaluation-msg");
     const controlsContainer = document.getElementById("end-controls");
 
-    // พิจารณาเกณฑ์ผ่าน: ดาวรวมต้องไม่ต่ำกว่า 20 จาก 30 ดวงตามที่ระบุในข้อกำหนดหน้าต้อนรับ HTML
     if (score >= 20) {
-        endTitle.innerText = "🎉 ปฏิบัติการสำเร็จเสร็จสิ้น!";
-        endTitle.className = "text-3xl font-bold mb-2 text-emerald-400";
-        endRank.innerText = "🎖️ ยศนักสืบ: Engineering Master";
-        endRank.className = "text-2xl font-bold text-cyan-400 mb-4";
-        evaluationMsg.innerText = "ขอชื่นชม! เธอสกัดใจความสำคัญ 5W1H และระบุเทคโนโลยีแนวทางแก้ปัญหาทางวิศวกรรมได้อย่างยอดเยี่ยม ไร้ที่ติ!";
-        evaluationMsg.className = "text-emerald-400 mb-6 font-bold text-lg";
+        if (endTitle) { endTitle.innerText = "🎉 ปฏิบัติการสำเร็จเสร็จสิ้น!"; endTitle.className = "text-3xl font-bold mb-2 text-emerald-400"; }
+        if (endRank) { endRank.innerText = "🎖️ ยศนักสืบ: Engineering Master"; endRank.className = "text-2xl font-bold text-cyan-400 mb-4"; }
+        if (evaluationMsg) { evaluationMsg.innerText = "ขอชื่นชม! เธอสกัดใจความสำคัญ 5W1H และระเบียบแนวทางแก้ปัญหาทางวิศวกรรมได้อย่างยอดเยี่ยม ไร้ที่ติ!"; evaluationMsg.className = "text-emerald-400 mb-6 font-bold text-lg"; }
     } else {
-        endTitle.innerText = "🚨 ภารกิจยังไม่ผ่านเกณฑ์ทดสอบ!";
-        endTitle.className = "text-3xl font-bold mb-2 text-amber-500";
-        endRank.innerText = "🎖️ ยศนักสืบ: Detective Assistant (ผู้ช่วยฝึกหัด)";
-        endRank.className = "text-2xl font-bold text-slate-400 mb-4";
-        evaluationMsg.innerText = "ดาวสะสมไม่ถึง 20 ดวงเนื่องจากข้อมูลสืบสวนคลาดเคลื่อน กลับไปรวบรวมพยานหลักฐานและวิเคราะห์ปัญหาใหม่อีกครั้ง!";
-        evaluationMsg.className = "text-amber-400 mb-6 font-bold text-lg";
+        if (endTitle) { endTitle.innerText = "🚨 ภารกิจยังไม่ผ่านเกณฑ์ทดสอบ!"; endTitle.className = "text-3xl font-bold mb-2 text-amber-500"; }
+        if (endRank) { endRank.innerText = "🎖️ ยศนักสืบ: Detective Assistant (ผู้ช่วยฝึกหัด)"; endRank.className = "text-2xl font-bold text-slate-400 mb-4"; }
+        if (evaluationMsg) { evaluationMsg.innerText = "ดาวสะสมไม่ถึง 20 ดวงเนื่องจากข้อมูลสืบสวนคลาดเคลื่อน กลับไปรวบรวมพยานหลักฐานและวิเคราะห์ปัญหาใหม่อีกครั้ง!"; evaluationMsg.className = "text-amber-400 mb-6 font-bold text-lg"; }
     }
 
-    // สร้างปุ่มกดเริ่มใหม่อัจฉริยะในหน้าสุดท้าย
-    controlsContainer.innerHTML = "";
-    const retryBtn = document.createElement("button");
-    retryBtn.innerText = "🔄 เริ่มภารกิจสืบสวนใหม่อีกครั้ง";
-    retryBtn.className = "bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-bold px-8 py-3 rounded-lg text-lg transition duration-200 shadow-lg cursor-pointer";
-    retryBtn.onclick = startGame;
-    controlsContainer.appendChild(retryBtn);
+    if (controlsContainer) {
+        controlsContainer.innerHTML = "";
+        const retryBtn = document.createElement("button");
+        retryBtn.innerText = "🔄 เริ่มภารกิจสืบสวนใหม่อีกครั้ง";
+        retryBtn.className = "bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-bold px-8 py-3 rounded-lg text-lg transition duration-200 shadow-lg cursor-pointer";
+        retryBtn.onclick = startGame;
+        controlsContainer.appendChild(retryBtn);
+    }
 }
 
 // ==========================================
-// 4. ฟังก์ชันเสริมย่อยควบคุมสภาพแวดล้อมระบบ UI (Helper Functions)
+// 4. ฟังก์ชันความปลอดภัย (Safe Handlers)
 // ==========================================
+function safelyToggleDisplay(elementId, shouldShow) {
+    const el = document.getElementById(elementId);
+    if (el) {
+        if (shouldShow) el.classList.remove("hidden");
+        else el.classList.add("hidden");
+    }
+}
+
+function safelySetText(elementId, text) {
+    const el = document.getElementById(elementId);
+    if (el) el.innerText = text;
+}
+
 function resetToolButtons() {
     const keys = ['who', 'what', 'when', 'where', 'why'];
     const borderColors = { who: 'border-sky-400/30', what: 'border-red-400/30', when: 'border-green-400/30', where: 'border-yellow-400/30', why: 'border-purple-400/30' };
@@ -751,9 +757,7 @@ function resetToolButtons() {
     
     keys.forEach(key => {
         const btn = document.getElementById(`btn-${key}`);
-        if (btn) {
-            btn.className = `p-3 rounded-lg font-bold border-2 ${borderColors[key]} ${textColors[key]} hover:bg-slate-700/40 cursor-pointer transition`;
-        }
+        if (btn) btn.className = `p-3 rounded-lg font-bold border-2 ${borderColors[key]} ${textColors[key]} hover:bg-slate-700/40 cursor-pointer transition`;
     });
 }
 
@@ -766,33 +770,4 @@ function resetNotebookUI() {
             note.className = "text-slate-400 italic";
         }
     });
-}
-
-// ฟังก์ชันเทียบความใกล้เคียงของข้อความเพื่อลดหย่อนหากเด็กตัดหัว/ท้ายคำขาดไปนิดหน่อย
-function similarityScore(s1, s2) {
-    let longer = s1.length > s2.length ? s1 : s2;
-    let shorter = s1.length > s2.length ? s2 : s1;
-    if (longer.length === 0) return 1.0;
-    return (longer.length - editDistance(longer, shorter)) / parseFloat(longer.length);
-}
-
-function editDistance(s1, s2) {
-    let costs = [];
-    for (let i = 0; i <= s1.length; i++) {
-        let lastValue = i;
-        for (let j = 0; j <= s2.length; j++) {
-            if (i === 0) costs[j] = j;
-            else {
-                if (j > 0) {
-                    let newValue = costs[j - 1];
-                    if (s1.charAt(i - 1) !== s2.charAt(j - 1))
-                        newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
-                    costs[j - 1] = lastValue;
-                    lastValue = newValue;
-                }
-            }
-        }
-        if (i > 0) costs[s2.length] = lastValue;
-    }
-    return costs[s2.length];
 }
