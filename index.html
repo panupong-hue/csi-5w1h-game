@@ -3,102 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSI Cyber Investigation: The Missing Problem</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    
+    <title>CSI Investigation: The Missing Problem (5W1H)</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="p-4 md:p-8">
 
-<div class="game-container">
-    <div id="screen-login" class="screen active">
-        <h1>CSI Cyber Investigation</h1>
-        <h3>ระบบฝึกฝนการระบุปัญหาอัจฉริยะ (5W1H)</h3>
-        <p style="text-align: center; color: #94a3b8;">สวมบทบาทนักสืบดิจิทัล วิเคราะห์เคสเพื่อสกัดข้อมูลตามหลักวิศวกรรม</p>
-        
-        <div class="input-group">
-            <label for="student-name">ชื่อ - นามสกุล</label>
-            <input type="text" id="student-name" placeholder="กรอกชื่อและนามสกุล">
-        </div>
-        <div class="input-group">
-            <label for="student-no">เลขที่</label>
-            <input type="number" id="student-no" placeholder="กรอกเลขที่">
-        </div>
-        <button onclick="startGame()">เข้าสู่ระบบและสุ่มคดี</button>
+    <header class="max-w-6xl mx-auto mb-6 text-center border-b border-slate-700 pb-4">
+        <h1 class="text-3xl md:text-4xl font-bold text-cyan-400 tracking-wider">🕵️ CSI INVESTIGATION</h1>
+        <p class="text-slate-400 mt-1 text-sm md:text-base">เครื่องมือวิเคราะห์ปัญหาทางวิศวกรรมด้วยหลักการ 5W1H | วิชาออกแบบและเทคโนโลยี ม.4</p>
+    </header>
 
-        <div class="history-box">
-            <h4 style="margin: 0 0 10px 0; color: var(--primary);">💾 บันทึกสถิติสูงสุดในเครื่องนี้:</h4>
-            <p id="history-text" style="margin: 0; color: #cbd5e1; font-size: 14px;">ยังไม่พบประวัติการเล่นในเครื่องนี้</p>
-        </div>
-    </div>
-
-    <div id="screen-phase1" class="screen">
-        <div class="hud-bar">
-            <div>เจ้าหน้าที่: <span id="hud-name" style="color: var(--primary);"></span></div>
-            <div>คะแนน: <span id="hud-score" style="color: var(--success);">0</span></div>
-        </div>
-        <h2>Phase 1: ค้นหาเบาะแสจากรายงานเหตุ</h2>
-        <p style="color: #94a3b8; font-size: 14px;">คำแนะนำ: คลิกเลือกปุ่มเครื่องมือด้านล่าง (เช่น WHO) จากนั้นคลิกกลุ่มคำในรายงานด้านบนที่ตรงกับหมวดนั้น ๆ</p>
-        
-        <div class="case-box" id="case-text-container"></div>
-
-        <div class="tool-palette">
-            <div class="tool-btn" data-tool="WHO" onclick="selectTool('WHO')">🔵 WHO (ผู้ได้รับผลกระทบ)</div>
-            <div class="tool-btn" data-tool="WHAT" onclick="selectTool('WHAT')">🔵 WHAT (ตัวปัญหาที่เกิดขึ้น)</div>
-            <div class="tool-btn" data-tool="WHEN" onclick="selectTool('WHEN')">🔵 WHEN (เวลาที่เกิดปัญหา)</div>
-            <div class="tool-btn" data-tool="WHERE" onclick="selectTool('WHERE')">🔵 WHERE (สถานที่เกิดเหตุ)</div>
-            <div class="tool-btn" data-tool="WHY" onclick="selectTool('WHY')">🔵 WHY (สาเหตุหลักของปัญหา)</div>
-            <div class="tool-btn" data-tool="HOW" onclick="selectTool('HOW')">🔵 HOW (แนวทางแก้ไขเบื้องต้น)</div>
+    <main class="max-w-6xl mx-auto">
+        <div id="start-screen" class="text-center py-12 bg-slate-800/50 rounded-xl border border-slate-700 max-w-2xl mx-auto p-6">
+            <h2 class="text-2xl font-bold mb-4 text-amber-400">🚨 ได้รับแจ้งเหตุฉุกเฉินภารกิจสืบสวน!</h2>
+            <p class="text-slate-300 mb-6 text-left leading-relaxed">
+                เมืองและโรงเรียนของเรากำลังพบเจอกับปัญหาลึกลับ 30 คดี! ในฐานะ <b>วิศวกรสืบสวนไซเบอร์</b> 
+                เธอต้องเข้ารับการทดสอบไขคดีสุ่มจำนวน 10 คดี โดยใช้เครื่องมือปากกาไฮไลต์สกัดข้อมูล 5W1H ออกมาให้ถูกต้อง<br><br>
+                🎯 <b>เงื่อนไขการผ่าน:</b> ต้องสะสมดาวให้ได้ <u>ไม่ต่ำกว่า 20 จาก 30 ดวง</u> จึงจะได้รับยศ Engineering Master!
+            </p>
+            <button onclick="startGame()" class="bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-bold px-8 py-3 rounded-lg text-lg transition duration-200 shadow-lg cursor-pointer">
+                เริ่มปฎิบัติการสืบสวน
+            </button>
         </div>
 
-        <div class="evidence-board">
-            <div class="evidence-slot slot-who"><div class="slot-title">Who</div><div class="slot-value" id="slot-WHO">- ยังไม่พบหลักฐาน -</div></div>
-            <div class="evidence-slot slot-what"><div class="slot-title">What</div><div class="slot-value" id="slot-WHAT">- ยังไม่พบหลักฐาน -</div></div>
-            <div class="evidence-slot slot-when"><div class="slot-title">When</div><div class="slot-value" id="slot-WHEN">- ยังไม่พบหลักฐาน -</div></div>
-            <div class="evidence-slot slot-where"><div class="slot-title">Where</div><div class="slot-value" id="slot-WHERE">- ยังไม่พบหลักฐาน -</div></div>
-            <div class="evidence-slot slot-why"><div class="slot-title">Why</div><div class="slot-value" id="slot-WHY">- ยังไม่พบหลักฐาน -</div></div>
-            <div class="evidence-slot slot-how"><div class="slot-title">How</div><div class="slot-value" id="slot-HOW">- ยังไม่พบหลักฐาน -</div></div>
+        <div id="game-screen" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-4 border-b border-slate-700 pb-2">
+                        <span id="case-number" class="text-cyan-400 font-bold text-lg">📂 คดีที่ X/10</span>
+                        <div class="flex gap-2">
+                            <span id="current-stars" class="text-amber-400 font-bold">⭐ ดาวในคดีนี้: 3</span>
+                        </div>
+                    </div>
+                    
+                    <p class="text-slate-400 text-sm mb-2">💡 วิธีการสืบสวน: 1.คลิกเลือกประเภทเครื่องมือด้านล่าง 2.ใช้เมาส์ลากครอบข้อความในเนื้อเรื่องให้ตรงหมวด</p>
+                    
+                    <div id="case-text-box" class="bg-slate-900 p-6 rounded-lg text-lg md:text-xl leading-loose tracking-wide border border-slate-800 my-4 select-text">
+                        </div>
+                </div>
+
+                <div class="mt-4">
+                    <h3 class="text-sm font-bold text-slate-400 mb-2 uppercase tracking-wider">เลือกเครื่องมือปากกาไฮไลต์:</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-2">
+                        <button onclick="setTool('who')" id="btn-who" class="p-3 rounded-lg font-bold border-2 border-sky-400/30 text-sky-400 hover:bg-sky-400/10 cursor-pointer transition">👤 WHO (ใคร)</button>
+                        <button onclick="setTool('what')" id="btn-what" class="p-3 rounded-lg font-bold border-2 border-red-400/30 text-red-400 hover:bg-red-400/10 cursor-pointer transition">❓ WHAT (ปัญหา)</button>
+                        <button onclick="setTool('when')" id="btn-when" class="p-3 rounded-lg font-bold border-2 border-green-400/30 text-green-400 hover:bg-green-400/10 cursor-pointer transition">📅 WHEN (เมื่อไร)</button>
+                        <button onclick="setTool('where')" id="btn-where" class="p-3 rounded-lg font-bold border-2 border-yellow-400/30 text-yellow-400 hover:bg-yellow-400/10 cursor-pointer transition">📍 WHERE (ที่ไหน)</button>
+                        <button onclick="setTool('why')" id="btn-why" class="p-3 rounded-lg font-bold border-2 border-purple-400/30 text-purple-400 hover:bg-purple-400/10 cursor-pointer transition" style="grid-column: span 2 / span 2; @media (min-width: 768px) { grid-column: auto; }">🟣 WHY (สาเหตุหลัก)</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl flex flex-col justify-between">
+                <div>
+                    <h2 class="text-xl font-bold mb-4 text-cyan-400 border-b border-slate-700 pb-2 flex items-center gap-2">
+                        📋 สมุดบันทึกหลักฐาน
+                    </h2>
+                    <div class="space-y-3 text-sm">
+                        <div class="bg-slate-900/60 p-3 rounded border border-slate-700">
+                            <span class="text-sky-400 font-bold">👤 WHO:</span> <span id="note-who" class="text-slate-400 italic">ยังไม่พบหลักฐาน...</span>
+                        </div>
+                        <div class="bg-slate-900/60 p-3 rounded border border-slate-700">
+                            <span class="text-red-400 font-bold">❓ WHAT:</span> <span id="note-what" class="text-slate-400 italic">ยังไม่พบหลักฐาน...</span>
+                        </div>
+                        <div class="bg-slate-900/60 p-3 rounded border border-slate-700">
+                            <span class="text-green-400 font-bold">📅 WHEN:</span> <span id="note-when" class="text-slate-400 italic">ยังไม่พบหลักฐาน...</span>
+                        </div>
+                        <div class="bg-slate-900/60 p-3 rounded border border-slate-700">
+                            <span class="text-yellow-400 font-bold">📍 WHERE:</span> <span id="note-where" class="text-slate-400 italic">ยังไม่พบหลักฐาน...</span>
+                        </div>
+                        <div class="bg-slate-900/60 p-3 rounded border border-slate-700">
+                            <span class="text-purple-400 font-bold">🟣 WHY:</span> <span id="note-why" class="text-slate-400 italic">ยังไม่พบหลักฐาน...</span>
+                        </div>
+                    </div>
+                    <div id="feedback-message" class="mt-4 p-3 rounded text-center text-sm font-bold min-h-[44px]"></div>
+                </div>
+
+                <div id="phase2-box" class="mt-6 p-4 bg-slate-900 rounded-lg border border-cyan-500/30 hidden">
+                    <h3 class="text-amber-400 font-bold mb-2">🎯 เฟส 2: ประเมินแนวทางแก้ไข</h3>
+                    <p id="quiz-question" class="text-sm text-slate-200 mb-3"></p>
+                    <div id="quiz-options" class="space-y-2">
+                        </div>
+                </div>
+
+                <button id="btn-next-case" onclick="nextCase()" class="mt-4 w-full bg-emerald-500 hover:bg-emerald-600 text-slate-900 font-bold py-3 rounded-lg hidden transition cursor-pointer">
+                    ส่งสรุปและไปคดีถัดไป ──►
+                </button>
+            </div>
         </div>
 
-        <button id="btn-goto-phase2" style="display:none;" onclick="goToPhase2()">ส่งข้อมูลเข้าศูนย์วิเคราะห์ (Phase 2)</button>
-    </div>
-
-    <div id="screen-phase2" class="screen">
-        <h2>Phase 2: ห้องแล็บสังเคราะห์ปัญหา</h2>
-        <p style="color: #94a3b8; text-align: center;">นำข้อมูล 5W1H มาสกัดหาแก่นที่แท้จริงตามหลักวิศวกรรม</p>
-        
-        <div id="quiz-container">
-            <h3 id="quiz-question" style="text-align: left; margin-top: 20px; color: white;">คำถามวิเคราะห์ปัญหา...</h3>
-            <div id="quiz-options"></div>
-        </div>
-        <br>
-        <button onclick="submitQuiz()">สรุปคดีและคำนวณ Rank</button>
-    </div>
-
-    <div id="screen-result" class="screen">
-        <div id="capture-area">
-            <h2>CASE CLOSED: สรุปผลการสืบสวน</h2>
-            <div class="rank-badge" id="result-rank">RANK: EVALUATING</div>
+        <div id="end-screen" class="hidden text-center py-8 bg-slate-800 rounded-xl border border-slate-700 max-w-2xl mx-auto p-6 shadow-2xl">
+            <h2 id="end-title" class="text-3xl font-bold mb-2 text-emerald-400">🎉 ปฏิบัติการสำเร็จเสร็จสิ้น!</h2>
+            <p id="end-rank" class="text-2xl font-bold text-cyan-400 mb-4">ยศนักสืบ: GRANDMASTER ENGINEER</p>
             
-            <table class="summary-table">
-                <tr><th>ชื่อ - นามสกุล นักเรียน</th><td><span id="res-name"></span></td></tr>
-                <tr><th>เลขที่</th><td><span id="res-no"></span></td></tr>
-                <tr><th>คะแนนสืบสวนรอบนี้</th><td><span id="res-score" style="color: var(--success); font-weight: bold;"></span> คะแนน</td></tr>
-                <tr><th>คะแนนสูงสุดที่เคยทำได้</th><td><span id="res-highscore" style="color: var(--primary); font-weight: bold;"></span> คะแนน</td></tr>
-                <tr><th>เวลาที่ใช้สืบคดี</th><td><span id="res-time"></span> วินาที</td></tr>
-            </table>
-            <p style="text-align: center; color: #94a3b8; font-size: 12px; margin: 0;">คดีสุ่มระบบสร้างอัตโนมัติ โรงเรียนวรราชาทินัดดามาตุวิทยา</p>
-        </div>
-        
-        <br>
-        <button class="btn-success" onclick="downloadReportImage()">📥 ดาวน์โหลดภาพหลักฐานคะแนนลงเครื่องคอมพิวเตอร์</button>
-        <button onclick="location.reload()">เริ่มคดีใหม่ (ฝึกฝนเพิ่มทำลายสถิติ)</button>
-    </div>
-</div>
+            <div class="bg-slate-900 p-6 rounded-lg border border-slate-700 mb-6 text-left space-y-2 text-base">
+                <p>📊 <b>ผลสรุปหลักฐานทางวิชาการ:</b></p>
+                <div class="grid grid-cols-2 gap-4 pt-2 border-t border-slate-800">
+                    <div>🎯 ผ่านคดีทั้งหมด: <span class="text-emerald-400 font-bold">10 / 10 คดี</span></div>
+                    <div>⭐ ดาวรวมที่สะสมได้: <span id="end-total-stars" class="text-amber-400 font-bold">0 / 30 ดวง</span></div>
+                </div>
+            </div>
 
-<script src="script.js"></script>
+            <p id="end-evaluation-msg" class="text-slate-300 mb-6 font-bold text-lg"></p>
+
+            <div id="end-controls" class="flex flex-col sm:flex-row gap-4 justify-center">
+                </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
 </body>
 </html>
