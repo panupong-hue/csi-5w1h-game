@@ -1,5 +1,5 @@
 // ==========================================
-// 1. ฐานข้อมูลคดี 30 ข้อ (แก้บั๊กสี + เกลี่ยความยาวแล้ว)
+// 1. ฐานข้อมูลคดี 30 ข้อ (แก้ไข ID ข้อ 30 และตรวจสอบข้อมูลเรียบร้อย)
 // ==========================================
 const caseBank = [
     { 
@@ -162,10 +162,6 @@ const caseBank = [
             correct: 1 
         } 
     },
-
-    // ==========================================
-    // หมวดที่ 2: ปัญหาสังคมและความปลอดภัยไซเบอร์ (คดี 11-20)
-    // ==========================================
     { 
         id: 11, 
         text: "ภายในบ้านพักส่วนตัวในช่วงสัปดาห์ที่ผ่านมา วิกฤตการถูกกลุ่มมิจฉาชีพทางอินเทอร์เน็ตทำการแฮกขโมยข้อมูลและเปลี่ยนรหัสผ่านบัญชีเกมออนไลน์มูลค่าสูง ได้เกิดขึ้นกับนักเรียนชั้น ม.4 สายวิชาชีพเทคโนโลยี หลังจากที่ตัวเหยื่อได้หลงเชื่อกลอุบายและเผลอกดลิงก์ฟิชชิ่งที่อ้างว่าเป็นการแจกไอเทมระดับตำนานฟรีจากข้อความแชตนิรนาม", 
@@ -188,7 +184,7 @@ const caseBank = [
         targets: { 
             who: "กลุ่มเยาวชนหัวรุนแรงคึกคะนอง", 
             what: "สภาวะตื่นตระหนกโกลาหลและเกิดความเครียดขวัญเสียแก่กลุ่มเพื่อนและผู้ปกครองทั่วนครหลวง", 
-            when: "ในช่วงเวลากลางดึกสงัด", 
+            when: "ลงในระบบแชตกลุ่มไลน์ห้องเรียน", 
             where: "ลงในระบบแชตกลุ่มไลน์ห้องเรียน", 
             why: "แอบแชร์ลิงก์บทความข่าวปลอม (Fake News) ที่สร้างข้อมูลเท็จว่า 'พบวัตถุระเบิดแสวงเครื่องซุกซ่อนใต้บันไดเลื่อนห้างสรรพสินค้าชื่อดัง' โดยขาดการไตร่ตรอง" 
         }, 
@@ -216,7 +212,7 @@ const caseBank = [
     },
     { 
         id: 14, 
-        text: "ในช่วงเทศกาลมหกรรมลดราคากระหน่ำ 11.11 ณ บ้านพักอาศัย ความสูญเสียจากการพบเพียงสมุดโน้ตกระดาษเปล่าไร้ค่าเล่มละสิบบาทและสูญเสียเงินเก็บไปจนหมดสิ้น ได้เกิดขึ้นกับสมาชิกทีมออกแบบของชมรมศิลปะสร้างสรรค์ ซึ่งตกเป็นเหยื่อกลโกงพาณิชย์อิレクトรอนิกส์หลังจากทำรายการสั่งซื้อแท็บเล็ตวาดภาพราคาถูกผิดปกติผ่านแอปพลิเคชันร้านค้าออนไลน์แห่งหนึ่ง", 
+        text: "ในช่วงเทศกาลมหกรรมลดราคากระหน่ำ 11.11 ณ บ้านพักอาศัย ความสูญเสียจากการพบเพียงสมุดโน้ตกระดาษเปล่าไร้ค่าเล่มละสิบบาทและสูญเสียเงินเก็บไปจนหมดสิ้น ได้เกิดขึ้นกับสมาชิกทีมออกแบบของชมรมศิลปะสร้างสรรค์ ซึ่งตกเป็นเหยื่อกลโกงพาณิชย์อิเล็กทรอนิกส์หลังจากทำรายการสั่งซื้อแท็บเล็ตวาดภาพราคาถูกผิดปกติผ่านแอปพลิเคชันร้านค้าออนไลน์แห่งหนึ่ง", 
         targets: { 
             who: "สมาชิกทีมออกแบบของชมรมศิลปะสร้างสรรค์", 
             what: "ความสูญเสียจากการพบเพียงสมุดโน้ตกระดาษเปล่าไร้ค่าเล่มละสิบบาทและสูญเสียเงินเก็บไปจนหมดสิ้น", 
@@ -322,14 +318,10 @@ const caseBank = [
         }, 
         quiz: { 
             q: "คดีนี้จัดเป็น 'มลพิษทางแสง (Light Pollution)' แนวทางการแก้ไขปัญหาเชิงวิศวกรรมสถาปัตยกรรมสำหรับตัวผู้ได้รับผลกระทบข้อใดมีประสิทธิภาพที่สุด?", 
-            a: ["การใช้สารเคมีหรือเวชภัณฑ์ประเภทยานอนหลับเพื่อลดอัตราการรับรู้สิ่งเร้าของร่างกาย", "การติดตั้งฟิล์มเซรามิกส์ตัดแสงสะท้อนควบคู่กับผ้าม่านทึบแสงหนาประเภทบล็อกแสงร้อยเปอร์เซ็นต์", "การจัดทำเอกสารข้อร้องเรียนทางกฎหมายเพื่อสั่งให้รื้อถอนโครงสร้างป้ายโฆษณาทันที"], 
+            a: ["การใช้สารเคมีหรือเวชภัณฑ์ประเภทยานอนหลับเพื่อลดอัตราการรับรู้สิ่งเร้าของร่างกาย", "การติดตั้งฟิล์มนาโนเซรามิกส์ตัดแสงสะท้อนควบคู่กับผ้าม่านทึบแสงหนาประเภทบล็อกแสงร้อยเปอร์เซ็นต์", "การจัดทำเอกสารข้อร้องเรียนทางกฎหมายเพื่อสั่งให้รื้อถอนโครงสร้างป้ายโฆษณาทันที"], 
             correct: 1 
         } 
     },
-
-    // ==========================================
-    // หมวดที่ 3: ปัญหาสิ่งแวดล้อมและพลังงาน (คดี 21-30)
-    // ==========================================
     { 
         id: 21, 
         text: "ภายในห้องปฏิบัติการเคมีอัจฉริยะ ทุก ๆ วันศุกร์ปลายสัปดาห์ตลอดทั้งปีการศึกษา ตัวเลขมิเตอร์ไฟฟ้าพุ่งสูงผิดปกติเนื่องจากมีคนเปิดระบบปรับอากาศและไฟแสงสว่างทิ้งไว้ข้ามคืน ได้ถูกตรวจพบโดยนักการภารโรงประจำตึกวิทยาศาสตร์ เนื่องจากพฤทีพฤติกรรมที่นักเรียนคาบสุดท้ายมักเร่งรีบวิ่งไปขึ้นรถตู้โดยสารประจำทางจนหลงลืมตรวจสอบสวิตช์ควบคุมหลักก่อนออกจากอาคาร", 
@@ -438,7 +430,7 @@ const caseBank = [
         }, 
         quiz: { 
             q: "ตามแนวคิดระบบเศรษฐกิจหมุนเวียน (Circular Economy) เราควรประยุกต์ใช้เทคโนโลยีชีวภาพข้อใดเพื่อเปลี่ยนขยะอินทรีย์นี้ให้มีมูลค่าสูงสุด?", 
-            a: ["การดำเนินการขุดหลุมฝังกลบความลึกสูงและปิดทับด้วยวัสดุคอนกรีตเพื่อสกัดกั้นการระบายก๊าซ", "การแปรรูปขยะอาหารผ่านถังหมักชีวภาพระบบปิดเพื่อเปลี่ยนเป็นก๊ก๊าซหุงต้มและปุ๋ยอินทรีย์เหลว", "การใช้สารเคมีดับกลิ่นและสารปรับสภาพอากาศฉีดพ่นบริเวณจุดพักขยะอย่างต่อเนื่องทุกครึ่งชั่วโมง"], 
+            a: ["การดำเนินการขุดหลุมฝังกลบความลึกสูงและปิดทับด้วยวัสดุคอนกรีตเพื่อสกัดกั้นการระบายก๊าซ", "การแปรรูปขยะอาหารผ่านถังหมักชีวภาพระบบปิดเพื่อเปลี่ยนเป็นก๊าซหุงต้มและปุ๋ยอินทรีย์เหลว", "การใช้สารเคมีดับกลิ่นและสารปรับสภาพอากาศฉีดพ่นบริเวณจุดพักขยะอย่างต่อเนื่องทุกครึ่งชั่วโมง"], 
             correct: 1 
         } 
     },
@@ -475,14 +467,14 @@ const caseBank = [
         } 
     },
     { 
-        id: 20, 
+        id: 30, 
         text: "ภายในห้องปฏิบัติการเครือข่ายตึก 3 ในช่วงคาบเรียนปฏิบัติการโครงสร้างข้อมูล วิกฤติสัญญาณอินเทอร์เน็ตไร้สาย (Wi-Fi) มีอัตราความเร็วตกฮวบ หน่วง และหลุดออกจากระบบเซิร์ฟเวอร์หลักอยู่ตลอดเวลา ได้สร้างอุปสรรคครั้งใหญ่แก่ครูผู้สอนและกลุ่มผู้เรียนรายวิชาคอมพิวเตอร์ เนื่องจากสถานีฐานตัวกระจายสัญญาณ (Access Point) ถูกดึงแบนด์วิดท์มหาศาลไปใช้ในขบวนการดาวน์โหลดไฟล์วิดีโอความละเอียดสูงขนาดใหญ่พร้อม ๆ กันของคอมพิวเตอร์ลูกข่ายจำนวน 40 เครื่อง", 
         targets: { 
             who: "ครูผู้สอนและกลุ่มผู้เรียนรายวิชาคอมพิวเตอร์", 
             what: "วิกฤติสัญญาณอินเทอร์เน็ตไร้สาย (Wi-Fi) มีอัตราความเร็วตกฮวบ หน่วง และหลุดออกจากระบบเซิร์ฟเวอร์หลักอยู่ตลอดเวลา", 
             when: "ในช่วงคาบเรียนปฏิบัติการโครงสร้างข้อมูล", 
             where: "ภายในห้องปฏิบัติการเครือข่ายตึก 3", 
-            why: "สถานีฐานตัวกระจายสัญญาณ (Access Point) ถูกดึงแบนด์วิดท์มหาศาลไปใช้ในขบวนการดาวน์โหลดไฟล์วิดีโอความละเอียดสูงขนาดใหญ่พร้อม ๆ กันของคอมพิวเตอร์ลูกข่ายจำนวน 40 เครื่อง" 
+            why: "สถานีฐานตัวกระจายสัญญาณ (Access Point) ถูกดืนแบนด์วิดท์มหาศาลไปใช้ในขบวนการดาวน์โหลดไฟล์วิดีโอความละเอียดสูงขนาดใหญ่พร้อม ๆ กันของคอมพิวเตอร์ลูกข่ายจำนวน 40 เครื่อง" 
         }, 
         quiz: { 
             q: "ในแง่วิศวกรรมเครือข่ายสื่อสารสารสนเทศ (Network Engineering) ปัญหานี้ควรตั้งค่าจัดสรรทรัพยากรระบบอินเทอร์เน็ตอย่างไรให้ตรงจุดวิศวกรรม?", 
@@ -493,59 +485,314 @@ const caseBank = [
 ];
 
 // ==========================================
-// 2. ตัวแปรสถานะและการทำงานของเกม (Game State)
+// 2. ตัวแปรควบคุมสถานะระบบเกม (Game Control States)
 // ==========================================
-let currentPhase = 1;       // เฟสปัจจุบัน (1 หรือ 2)
-let currentCaseIndex = 0;   // ดัชนีคดีปัจจุบันที่เล่นอยู่
-let selectedCases = [];     // คดีที่ถูกสุ่มเลือกมาเล่นในรอบนั้น ๆ
-let score = 0;              // คะแนนรวมของผู้เล่น
-let timerInterval = null;   // ตัวนับเวลาถอยหลัง
+let selectedCases = [];
+let currentCaseIndex = 0;
+let currentPhase = 1; // เฟส 1 = ไฮไลต์เนื้อเรื่อง, เฟส 2 = ตอบคำถามวิศวกรรม
+let score = 0;        // ดาวรวมสะสมสูงสุด 30 ดวง (10 คดี คดีละ 3 ดาว)
+let currentTool = ""; // เก็บค่าปากกาไฮไลต์ที่เลือก ('who', 'what', 'when', 'where', 'why')
+
+// ข้อมูลคำตอบที่เด็กเลือกทำการลากไฮไลต์จับคู่ในคดีนั้น ๆ
+let currentEvidence = { who: "", what: "", when: "", where: "", why: "" };
+
+// สไตล์คลาสสีของไฮไลต์ (Tailwind CSS บันทึกตรงกับประเภทเครื่องมือ)
+const toolStyles = {
+    who: { bg: 'bg-sky-400/30', text: 'text-sky-400', border: 'border-sky-400' },
+    what: { bg: 'bg-red-400/30', text: 'text-red-400', border: 'border-red-400' },
+    when: { bg: 'bg-green-400/30', text: 'text-green-400', border: 'border-green-400' },
+    where: { bg: 'bg-yellow-400/30', text: 'text-yellow-400', border: 'border-yellow-400' },
+    why: { bg: 'bg-purple-400/30', text: 'text-purple-400', border: 'border-purple-400' }
+};
 
 // ==========================================
-// 3. ฟังก์ชันหลักสำหรับเริ่มเกม (Start Game)
+// 3. ระบบฟังก์ชันตรรกะควบคุมเกม (Game Logic Functions)
 // ==========================================
+
+// ฟังก์ชันเริ่มปฏิบัติการ (เรียกใช้งานเมื่อกดปุ่มบนหน้า HTML)
 function startGame() {
-    console.log("Game System Setup: Starting...");
-    
-    // รีเซ็ตคะแนนและดัชนีคดีกลับไปเริ่มต้น
     score = 0;
     currentCaseIndex = 0;
     currentPhase = 1;
-
-    // เคลียร์ค่าตัวจับเวลาเก่าที่ค้างอยู่ (ถ้ามี)
-    if (timerInterval) {
-        clearInterval(timerInterval);
-    }
-
-    // ทำการสุ่มเลือกคดีจากคลัง (เช่น สุ่มมา 5 คดีจาก 30 คดีเพื่อป้องกันเด็กจำคำตอบ)
-    selectedCases = shuffleArray([...caseBank]).slice(0, 5); 
-
-    // เปลี่ยนหน้าแสดงผลจากเมนูหลัก (Start Screen) ไปยังหน้าจอเล่นเกม (Gameplay Screen)
-    const startScreen = document.getElementById("start-screen");
-    const gameScreen = document.getElementById("game-screen");
+    currentTool = "";
     
-    if (startScreen && gameScreen) {
-        startScreen.classList.add("hidden");
-        gameScreen.classList.remove("hidden");
-    }
+    // สุ่มสลับคดีและคัดเลือกมาเล่น 10 คดีตามโจทย์ HTML
+    selectedCases = [...caseBank].sort(() => 0.5 - Math.random()).slice(0, 10);
 
-    // เรียกโหลดคดีข้อแรกขึ้นมาแสดงผลทันที
+    // ควบคุมสลับหน้าจอแสดงผล
+    document.getElementById("start-screen").classList.add("hidden");
+    document.getElementById("end-screen").classList.add("hidden");
+    document.getElementById("game-screen").classList.remove("hidden");
+
     loadCase();
 }
 
-// ฟังก์ชันช่วยสุ่มสลับตำแหน่งอาร์เรย์ (Utility Shuffle)
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
+// ฟังก์ชันโหลดข้อมูลคดีปัจจุบันขึ้นสู่ UI
+function loadCase() {
+    currentPhase = 1;
+    currentTool = "";
+    currentEvidence = { who: "", what: "", when: "", where: "", why: "" };
+    
+    // รีเซ็ตหน้าสมุดบันทึกบนหน้าจอ
+    resetNotebookUI();
+    
+    const currentCase = selectedCases[currentCaseIndex];
+    
+    // แสดงความคืบหน้าลำดับคดี
+    document.getElementById("case-number").innerText = `📂 คดีที่ ${currentCaseIndex + 1} / 10`;
+    document.getElementById("current-stars").innerText = `⭐ ดาวในคดีนี้: 3`;
+    document.getElementById("feedback-message").innerText = "";
+    document.getElementById("feedback-message").className = "mt-4 p-3 rounded text-center text-sm font-bold min-h-[44px]";
+
+    // นำเนื้อความคดีมาบรรจุลงกล่องข้อความ
+    const textBox = document.getElementById("case-text-box");
+    textBox.innerText = currentCase.text;
+
+    // ซ่อนกล่องเฟส 2 และปุ่มถัดไปชั่วคราว
+    document.getElementById("phase2-box").classList.add("hidden");
+    document.getElementById("btn-next-case").classList.add("hidden");
+
+    // ล้างสถานะสีขอบของปุ่มเลือกเครื่องมือทั้งหมด
+    resetToolButtons();
+    
+    // เชื่อมต่อ Event การดักจับลากเมาส์ไฮไลต์ข้อความ
+    textBox.removeEventListener("mouseup", handleTextSelection);
+    textBox.addEventListener("mouseup", handleTextSelection);
 }
 
-// เผื่อระบบผูกปุ่มผ่านคำสั่งของ Window ให้ตรวจจับคลิกได้ชัวร์ร้อยเปอร์เซ็นต์
-window.onload = function() {
-    const startBtn = document.getElementById("start-btn");
-    if (startBtn) {
-        startBtn.addEventListener("click", startGame);
+// ฟังก์ชันเลือกประเภทเครื่องมือปากกาไฮไลต์
+function setTool(toolName) {
+    if (currentPhase !== 1) return; // หากผ่านเข้าเฟส 2 แล้ว จะเลือกแก้ไขไฮไลต์ไม่ได้
+    currentTool = toolName;
+    resetToolButtons();
+    
+    // เปลี่ยนสถานะปุ่มที่ถูกเลือกให้เป็นสีเข้มชัดเจน
+    const activeBtn = document.getElementById(`btn-${toolName}`);
+    if (activeBtn) {
+        activeBtn.classList.remove("hover:bg-opacity-10");
+        activeBtn.className = `p-3 rounded-lg font-bold border-2 ${toolStyles[toolName].border} ${toolStyles[toolName].bg} ${toolStyles[toolName].text} cursor-pointer transition scale-95`;
     }
-};
+}
+
+// ฟังก์ชันจัดการตรรกะเมื่อผู้เรียนลากไฮไลต์ข้อความ (Text Selection)
+function handleTextSelection() {
+    if (!currentTool) {
+        alert("🚨 กรุณาเลือกเครื่องมือปากกาไฮไลต์ (ด้านล่าง) ก่อนลากครอบข้อความครับ!");
+        return;
+    }
+
+    const selection = window.getSelection();
+    const selectedText = selection.toString().trim();
+
+    if (selectedText.length > 0) {
+        // บันทึกคำที่เลือกลงระบบจำลองหลักฐาน
+        currentEvidence[currentTool] = selectedText;
+        
+        // อัปเดตลงสมุดบันทึกหลักฐานฝั่งขวาบน UI
+        const noteElement = document.getElementById(`note-${currentTool}`);
+        noteElement.innerText = selectedText;
+        noteElement.className = `${toolStyles[currentTool].text} font-semibold break-words`;
+
+        // ล้างแถบสีฟ้าปกติของ Browser หลังลากเสร็จ
+        selection.removeAllRanges();
+
+        // ตรวจสอบโครงสร้างว่าสกัดข้อมูลครบ 5W หรือยัง
+        checkPhase1Completion();
+    }
+}
+
+// ตรวจสอบว่าผู้เรียนจับข้อมูล 5W ครบทุกช่องหรือยังเพื่อปลดล็อกเฟส 2 ควิซคำถาม
+function checkPhase1Completion() {
+    const isComplete = currentEvidence.who && currentEvidence.what && currentEvidence.when && currentEvidence.where && currentEvidence.why;
+    
+    if (isComplete) {
+        // ประเมินผลให้คะแนนเฟส 1 ไฮไลต์ (ตรวจเช็กคำค้นหาความแม่นยำในเป้าหมาย)
+        evaluatePhase1();
+    }
+}
+
+// ฟังก์ชันคำนวณและประเมินผลการลากไฮไลต์เชิงวิชาการ
+function evaluatePhase1() {
+    const currentCase = selectedCases[currentCaseIndex];
+    let correctCount = 0;
+
+    // ระบบเปรียบเทียบคำหลัก (หากมีคำระบุเป้าหมายอย่างน้อย 50% ของคีย์เวิร์ดเฉลย ถือว่าถูกต้อง)
+    const keys = ['who', 'what', 'when', 'where', 'why'];
+    keys.forEach(key => {
+        const userAns = currentEvidence[key].toLowerCase();
+        const targetAns = currentCase.targets[key].toLowerCase();
+        if (targetAns.includes(userAns) || userAns.includes(targetAns) || similarityScore(userAns, targetAns) > 0.4) {
+            correctCount++;
+        }
+    });
+
+    const feedback = document.getElementById("feedback-message");
+    
+    if (correctCount >= 4) { // ลากถูกอย่างน้อย 4 ใน 5 จุด
+        score += 2; // ได้รับ 2 ดาวจากเฟสไฮไลต์
+        feedback.innerText = "✅ วิเคราะห์หลักฐาน 5W สำเร็จ! ได้รับพลังการสืบสวน ⭐⭐";
+        feedback.className = "mt-4 p-3 rounded text-center text-sm font-bold min-h-[44px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30";
+    } else {
+        score += 1; // ลากหลุดเกณฑ์ ได้รับประเมินขั้นพื้นฐาน 1 ดาว
+        feedback.innerText = "🔍 รวบรวมเบาะแสเสร็จสิ้น (มีบางจุดคลาดเคลื่อนจากคำให้การ) ได้รับ ⭐";
+        feedback.className = "mt-4 p-3 rounded text-center text-sm font-bold min-h-[44px] bg-amber-500/20 text-amber-400 border border-amber-500/30";
+    }
+
+    // ปลดล็อกเปิดกระดานเฟส 2 ควิซประเมินแนวทางแก้ไขปัญหาเชิงวิศวกรรม
+    openPhase2();
+}
+
+// เปิดแสดงกล่องข้อสอบวิศวกรรม (Phase 2)
+function openPhase2() {
+    currentPhase = 2;
+    const currentCase = selectedCases[currentCaseIndex];
+    
+    document.getElementById("phase2-box").classList.remove("hidden");
+    document.getElementById("quiz-question").innerText = currentCase.quiz.q;
+    
+    const optionsContainer = document.getElementById("quiz-options");
+    optionsContainer.innerHTML = "";
+
+    // เจนเนอเรตปุ่มคำตอบ 3 ตัวเลือกตามโครงสร้าง HTML
+    currentCase.quiz.a.forEach((optionText, index) => {
+        const btn = document.createElement("button");
+        btn.innerText = `${index + 1}. ${optionText}`;
+        btn.className = "w-full text-left p-3 rounded bg-slate-800 border border-slate-700 hover:bg-slate-700 transition cursor-pointer text-sm leading-relaxed";
+        btn.onclick = () => selectQuizAnswer(index, currentCase.quiz.correct);
+        optionsContainer.appendChild(btn);
+    });
+}
+
+// ตรวจสอบการเลือกตอบข้อสอบควิซวิศวกรรม
+function selectQuizAnswer(selectedIndex, correctIndex) {
+    const options = document.getElementById("quiz-options").children;
+    
+    // ล็อกปุ่มป้องกันการกดเปลี่ยนใจซ้ำ
+    for (let btn of options) {
+        btn.disabled = true;
+        btn.classList.remove("hover:bg-slate-700");
+    }
+
+    const feedback = document.getElementById("feedback-message");
+    
+    if (selectedIndex === correctIndex) {
+        score += 1; // ตอบคำถามแก้ปัญหาได้ตรงจุดรับดาวเพิ่มอีก 1 ดวงรวมเป็น 3 ดวงในข้อนั้น
+        options[selectedIndex].className = "w-full text-left p-3 rounded bg-emerald-500/20 border-2 border-emerald-500 text-emerald-300 font-bold text-sm leading-relaxed";
+        feedback.innerText = "🎯 ยอดเยี่ยม! แนวทางวิศวกรรมตรงจุดเผชิญหน้ากับต้นตอปัญหา ได้รับเพิ่ม ⭐";
+    } else {
+        options[selectedIndex].className = "w-full text-left p-3 rounded bg-red-500/20 border-2 border-red-500 text-red-300 text-sm leading-relaxed";
+        options[correctIndex].className = "w-full text-left p-3 rounded bg-emerald-500/10 border border-emerald-500/50 text-emerald-400 font-bold text-sm leading-relaxed";
+        feedback.innerText = "❌ เลือกแนวทางแก้ไขไม่ตรงจุดวิศวกรรม (ไม่ได้ดาวเพิ่มในเฟสนี้)";
+    }
+
+    // แสดงคะแนนดาวรวมเรียลไทม์หลังอัปเดตดาวดวงที่ 3
+    document.getElementById("current-stars").innerText = `⭐ คะแนนรวมสะสมปัจจุบัน: ${score}`;
+    
+    // ปลดล็อกเปิดปุ่มให้ก้าวไปสู่คดีถัดไปได้
+    document.getElementById("btn-next-case").classList.remove("hidden");
+}
+
+// ดำเนินการย้ายหน้าขยับไปคดีถัดไป หรือสรุปจบเกม
+function nextCase() {
+    currentCaseIndex++;
+    if (currentCaseIndex < 10) {
+        loadCase();
+    } else {
+        endGame();
+    }
+}
+
+// สรุปปิดคดีภารกิจ คำนวณอันดับยศตามเงื่อนไขผ่านเกณฑ์ผู้บริหารดาวโรงเรียน
+function endGame() {
+    document.getElementById("game-screen").classList.add("hidden");
+    const endScreen = document.getElementById("end-screen");
+    endScreen.classList.remove("hidden");
+
+    document.getElementById("end-total-stars").innerText = `${score} / 30 ดวง`;
+
+    const endTitle = document.getElementById("end-title");
+    const endRank = document.getElementById("end-rank");
+    const evaluationMsg = document.getElementById("end-evaluation-msg");
+    const controlsContainer = document.getElementById("end-controls");
+
+    // พิจารณาเกณฑ์ผ่าน: ดาวรวมต้องไม่ต่ำกว่า 20 จาก 30 ดวงตามที่ระบุในข้อกำหนดหน้าต้อนรับ HTML
+    if (score >= 20) {
+        endTitle.innerText = "🎉 ปฏิบัติการสำเร็จเสร็จสิ้น!";
+        endTitle.className = "text-3xl font-bold mb-2 text-emerald-400";
+        endRank.innerText = "🎖️ ยศนักสืบ: Engineering Master";
+        endRank.className = "text-2xl font-bold text-cyan-400 mb-4";
+        evaluationMsg.innerText = "ขอชื่นชม! เธอสกัดใจความสำคัญ 5W1H และระบุเทคโนโลยีแนวทางแก้ปัญหาทางวิศวกรรมได้อย่างยอดเยี่ยม ไร้ที่ติ!";
+        evaluationMsg.className = "text-emerald-400 mb-6 font-bold text-lg";
+    } else {
+        endTitle.innerText = "🚨 ภารกิจยังไม่ผ่านเกณฑ์ทดสอบ!";
+        endTitle.className = "text-3xl font-bold mb-2 text-amber-500";
+        endRank.innerText = "🎖️ ยศนักสืบ: Detective Assistant (ผู้ช่วยฝึกหัด)";
+        endRank.className = "text-2xl font-bold text-slate-400 mb-4";
+        evaluationMsg.innerText = "ดาวสะสมไม่ถึง 20 ดวงเนื่องจากข้อมูลสืบสวนคลาดเคลื่อน กลับไปรวบรวมพยานหลักฐานและวิเคราะห์ปัญหาใหม่อีกครั้ง!";
+        evaluationMsg.className = "text-amber-400 mb-6 font-bold text-lg";
+    }
+
+    // สร้างปุ่มกดเริ่มใหม่อัจฉริยะในหน้าสุดท้าย
+    controlsContainer.innerHTML = "";
+    const retryBtn = document.createElement("button");
+    retryBtn.innerText = "🔄 เริ่มภารกิจสืบสวนใหม่อีกครั้ง";
+    retryBtn.className = "bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-bold px-8 py-3 rounded-lg text-lg transition duration-200 shadow-lg cursor-pointer";
+    retryBtn.onclick = startGame;
+    controlsContainer.appendChild(retryBtn);
+}
+
+// ==========================================
+// 4. ฟังก์ชันเสริมย่อยควบคุมสภาพแวดล้อมระบบ UI (Helper Functions)
+// ==========================================
+function resetToolButtons() {
+    const keys = ['who', 'what', 'when', 'where', 'why'];
+    const borderColors = { who: 'border-sky-400/30', what: 'border-red-400/30', when: 'border-green-400/30', where: 'border-yellow-400/30', why: 'border-purple-400/30' };
+    const textColors = { who: 'text-sky-400', what: 'text-red-400', when: 'text-green-400', where: 'text-yellow-400', why: 'text-purple-400' };
+    
+    keys.forEach(key => {
+        const btn = document.getElementById(`btn-${key}`);
+        if (btn) {
+            btn.className = `p-3 rounded-lg font-bold border-2 ${borderColors[key]} ${textColors[key]} hover:bg-slate-700/40 cursor-pointer transition`;
+        }
+    });
+}
+
+function resetNotebookUI() {
+    const keys = ['who', 'what', 'when', 'where', 'why'];
+    keys.forEach(key => {
+        const note = document.getElementById(`note-${key}`);
+        if (note) {
+            note.innerText = "ยังไม่พบหลักฐาน...";
+            note.className = "text-slate-400 italic";
+        }
+    });
+}
+
+// ฟังก์ชันเทียบความใกล้เคียงของข้อความเพื่อลดหย่อนหากเด็กตัดหัว/ท้ายคำขาดไปนิดหน่อย
+function similarityScore(s1, s2) {
+    let longer = s1.length > s2.length ? s1 : s2;
+    let shorter = s1.length > s2.length ? s2 : s1;
+    if (longer.length === 0) return 1.0;
+    return (longer.length - editDistance(longer, shorter)) / parseFloat(longer.length);
+}
+
+function editDistance(s1, s2) {
+    let costs = [];
+    for (let i = 0; i <= s1.length; i++) {
+        let lastValue = i;
+        for (let j = 0; j <= s2.length; j++) {
+            if (i === 0) costs[j] = j;
+            else {
+                if (j > 0) {
+                    let newValue = costs[j - 1];
+                    if (s1.charAt(i - 1) !== s2.charAt(j - 1))
+                        newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+                    costs[j - 1] = lastValue;
+                    lastValue = newValue;
+                }
+            }
+        }
+        if (i > 0) costs[s2.length] = lastValue;
+    }
+    return costs[s2.length];
+}
