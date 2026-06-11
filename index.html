@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSI Investigation: The Missing Problem (5W1H)</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="p-4 md:p-8">
@@ -15,14 +15,14 @@
     </header>
 
     <main class="max-w-6xl mx-auto">
-        <div id="start-screen" class="text-center py-12 bg-slate-800/50 rounded-xl border border-slate-700 max-w-2xl mx-auto p-6">
+        <div id="start-screen" class="text-center py-12 bg-slate-800/50 rounded-xl border border-slate-700 max-w-2xl mx-auto p-6 relative z-50">
             <h2 class="text-2xl font-bold mb-4 text-amber-400">🚨 ได้รับแจ้งเหตุฉุกเฉินภารกิจสืบสวน!</h2>
             <p class="text-slate-300 mb-6 text-left leading-relaxed">
                 เมืองและโรงเรียนของเรากำลังพบเจอกับปัญหาลึกลับ 30 คดี! ในฐานะ <b>วิศวกรสืบสวนไซเบอร์</b> 
                 เธอต้องเข้ารับการทดสอบไขคดีสุ่มจำนวน 10 คดี โดยใช้เครื่องมือปากกาไฮไลต์สกัดข้อมูล 5W1H ออกมาให้ถูกต้อง<br><br>
                 🎯 <b>เงื่อนไขการผ่าน:</b> ต้องสะสมดาวให้ได้ <u>ไม่ต่ำกว่า 20 จาก 30 ดวง</u> จึงจะได้รับยศ Engineering Master!
             </p>
-            <button onclick="startGame()" class="bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-bold px-8 py-3 rounded-lg text-lg transition duration-200 shadow-lg cursor-pointer">
+            <button onclick="startGame()" class="bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-bold px-8 py-3 rounded-lg text-lg transition duration-200 shadow-lg cursor-pointer relative z-50 block mx-auto">
                 เริ่มปฎิบัติการสืบสวน
             </button>
         </div>
@@ -50,7 +50,7 @@
                         <button onclick="setTool('what')" id="btn-what" class="p-3 rounded-lg font-bold border-2 border-red-400/30 text-red-400 hover:bg-red-400/10 cursor-pointer transition">❓ WHAT (ปัญหา)</button>
                         <button onclick="setTool('when')" id="btn-when" class="p-3 rounded-lg font-bold border-2 border-green-400/30 text-green-400 hover:bg-green-400/10 cursor-pointer transition">📅 WHEN (เมื่อไร)</button>
                         <button onclick="setTool('where')" id="btn-where" class="p-3 rounded-lg font-bold border-2 border-yellow-400/30 text-yellow-400 hover:bg-yellow-400/10 cursor-pointer transition">📍 WHERE (ที่ไหน)</button>
-                        <button onclick="setTool('why')" id="btn-why" class="p-3 rounded-lg font-bold border-2 border-purple-400/30 text-purple-400 hover:bg-purple-400/10 cursor-pointer transition" style="grid-column: span 2 / span 2; @media (min-width: 768px) { grid-column: auto; }">🟣 WHY (สาเหตุหลัก)</button>
+                        <button onclick="setTool('why')" id="btn-why" class="p-3 rounded-lg font-bold border-2 border-purple-400/30 text-purple-400 hover:bg-purple-400/10 cursor-pointer transition col-span-2 md:col-span-1">🟣 WHY (สาเหตุหลัก)</button>
                     </div>
                 </div>
             </div>
