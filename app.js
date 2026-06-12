@@ -553,6 +553,9 @@ function startGame() {
 }
 
 function loadCase() {
+    // ค้นหาในฟังก์ชัน loadCase() แล้วแปะบรรทัดนี้เพิ่มเข้าไปด้านบน ๆ ครับ
+const oldPanel = document.getElementById("solution-panel");
+if (oldPanel) oldPanel.remove();
     currentPhase = 1;
     currentTool = "";
     currentEvidence = { who: "", what: "", when: "", where: "", why: "" };
@@ -719,6 +722,56 @@ function selectQuizAnswer(selectedIndex, correctIndex) {
         }
         if (feedback) feedback.innerText = "❌ เลือกแนวทางแก้ไขไม่ตรงจุดวิศวกรรม (ไม่ได้ดาวเพิ่มในเฟสนี้)";
     }
+
+    // ==========================================
+    // 🔍 [ส่วนที่เพิ่มเข้ามาใหม่] ระบบแสดงแผงเฉลย 5W ทันทีหลังสรุปคำตอบ
+    // ==========================================
+    const currentCase = selectedCases[currentCaseIndex];
+    
+    // สร้างกล่องข้อความเฉลย
+    const solutionBox = document.createElement("div");
+    solutionBox.id = "solution-panel";
+    solutionBox.className = "mt-4 p-4 rounded-lg bg-slate-900 border border-slate-700 text-sm animate-fadeIn animate-duration-300";
+    
+    solutionBox.innerHTML = `
+        <h4 class="font-bold text-cyan-400 mb-2 flex items-center gap-2">
+            🔍 บันทึกเฉลยจากกองพิสูจน์หลักฐาน (5W1H Analysis)
+        </h4>
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-2 mt-3">
+            <div class="p-2 rounded bg-sky-500/10 border border-sky-500/20">
+                <span class="text-xs font-bold text-sky-400 block">👤 WHO (ใครเกิดปัญหา)</span>
+                <span class="text-slate-200 font-semibold">${currentCase.targets.who}</span>
+            </div>
+            <div class="p-2 rounded bg-red-500/10 border border-red-500/20">
+                <span class="text-xs font-bold text-red-400 block">⚠️ WHAT (ปัญหารุนแรงคืออะไร)</span>
+                <span class="text-slate-200 font-semibold">${currentCase.targets.what}</span>
+            </div>
+            <div class="p-2 rounded bg-green-500/10 border border-green-500/20">
+                <span class="text-xs font-bold text-green-400 block">📅 WHEN (เกิดเหตุการณ์เมื่อไร)</span>
+                <span class="text-slate-200 font-semibold">${currentCase.targets.when}</span>
+            </div>
+            <div class="p-2 rounded bg-yellow-500/10 border border-yellow-500/20">
+                <span class="text-xs font-bold text-yellow-400 block">📍 WHERE (จุดเกิดเหตุอยู่ที่ไหน)</span>
+                <span class="text-slate-200 font-semibold">${currentCase.targets.where}</span>
+            </div>
+            <div class="p-2 rounded bg-purple-500/10 border border-purple-500/20">
+                <span class="text-xs font-bold text-purple-400 block">💡 WHY (สาเหตุ/รากเหง้าคืออะไร)</span>
+                <span class="text-slate-200 font-semibold">${currentCase.targets.why}</span>
+            </div>
+        </div>
+    `;
+
+    // แทรกกล่องเฉลยเข้าไปในเฟส 2 ต่อจากตัวเลือกคำตอบ
+    const phase2Box = document.getElementById("phase2-box");
+    if (phase2Box) {
+        // ลบกล่องเฉลยเก่าออกก่อน (ถ้ามีตกค้าง)
+        const oldPanel = document.getElementById("solution-panel");
+        if (oldPanel) oldPanel.remove();
+        
+        // ใส่กล่องเฉลยเข้าไปก่อนปุ่ม "ถัดไป"
+        phase2Box.insertBefore(solutionBox, document.getElementById("btn-next-case"));
+    }
+    // ==========================================
 
     safelySetText("current-stars", `⭐ คะแนนรวมสะสมปัจจุบัน: ${score}`);
     safelyToggleDisplay("btn-next-case", true);
