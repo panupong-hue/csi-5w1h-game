@@ -535,6 +535,33 @@ const toolStyles = {
 // 3. ระบบฟังก์ชันหลัก (Game Core Logic)
 // ==========================================
 
+// ==========================================
+// [จุดเริ่มต้นครึ่งหลัง] ระบบฟังก์ชันหลัก (Game Core Logic)
+// ==========================================
+
+// 🎯 ฟังก์ชันช่วยล็อกและอัปเดตคะแนนรวมสะสมให้แสดงบนหน้าจอตลอดเวลา
+function updateGlobalScoreUI() {
+    safelySetText("current-stars", `⭐ คะแนนรวมสะสมปัจจุบัน: ${score} ดวง`);
+}
+
+// ==========================================
+// [จุดเริ่มต้นครึ่งหลัง] ระบบฟังก์ชันหลัก (Game Core Logic)
+// ==========================================
+
+// 🎯 ฟังก์ชันช่วยล็อกและอัปเดตคะแนนรวมสะสมให้แสดงบนหน้าจอตลอดเวลา
+function updateGlobalScoreUI() {
+    safelySetText("current-stars", `⭐ คะแนนรวมสะสมปัจจุบัน: ${score} ดวง`);
+}
+
+// ==========================================
+// [จุดเริ่มต้นครึ่งหลัง] ระบบฟังก์ชันหลัก (Game Core Logic)
+// ==========================================
+
+// 🎯 ฟังก์ชันช่วยล็อกและอัปเดตคะแนนรวมสะสมให้แสดงบนหน้าจอตลอดเวลา
+function updateGlobalScoreUI() {
+    safelySetText("current-stars", `⭐ คะแนนรวมสะสมปัจจุบัน: ${score} ดวง`);
+}
+
 function startGame() {
     score = 0;
     currentCaseIndex = 0;
@@ -550,15 +577,17 @@ function startGame() {
     safelyToggleDisplay("game-screen", true);
 
     loadCase();
+    updateGlobalScoreUI(); // 🔔 ล็อกแต้มเริ่มต้นที่ 0 ดวง
 }
 
 function loadCase() {
-    // ค้นหาในฟังก์ชัน loadCase() แล้วแปะบรรทัดนี้เพิ่มเข้าไปด้านบน ๆ ครับ
-const oldPanel = document.getElementById("solution-panel");
-if (oldPanel) oldPanel.remove();
     currentPhase = 1;
     currentTool = "";
     currentEvidence = { who: "", what: "", when: "", where: "", why: "" };
+    
+    // 🔔 ล้างแผงเฉลยของข้อเก่าทิ้งทันทีเมื่อขึ้นข้อใหม่
+    const oldPanel = document.getElementById("solution-panel");
+    if (oldPanel) oldPanel.remove();
     
     resetNotebookUI();
     
@@ -566,7 +595,7 @@ if (oldPanel) oldPanel.remove();
     if (!currentCase) return;
 
     safelySetText("case-number", `📂 คดีที่ ${currentCaseIndex + 1} / 10`);
-    safelySetText("current-stars", `⭐ ดาวในคดีนี้: 3`);
+    updateGlobalScoreUI(); // 🔔 ตรึงแต้มสะสมปัจจุบันเอาไว้ ไม่ให้ข้อความเปลี่ยนเป็นอื่น
     safelySetText("case-text-box", currentCase.text);
     
     const feedback = document.getElementById("feedback-message");
@@ -598,7 +627,6 @@ function setTool(toolName) {
     }
 }
 
-// ฟังก์ชันลากครอบตัวอักษรและแปะสีไฮไลท์
 function handleTextSelection() {
     if (!currentTool) {
         alert("🚨 กรุณาเลือกเครื่องมือปากกาไฮไลต์ (ด้านล่าง) ก่อนลากครอบข้อความครับ!");
@@ -614,17 +642,14 @@ function handleTextSelection() {
 
         if (container && (container.contains(range.commonAncestorContainer) || container === range.commonAncestorContainer)) {
             
-            // บันทึกคำที่เด็กลากไว้
             currentEvidence[currentTool] = selectedText;
             
-            // อัปเดตแสดงผลที่ฝั่งสมุดโน้ตด้านขวา
             const noteElement = document.getElementById(`note-${currentTool}`);
             if (noteElement) {
                 noteElement.innerText = selectedText;
                 noteElement.className = `${toolStyles[currentTool].text} font-semibold break-words`;
             }
 
-            // แปะสีไฮไลท์บนข้อความ
             const mark = document.createElement("mark");
             mark.className = `${toolStyles[currentTool].bg} ${toolStyles[currentTool].text} rounded px-1 font-medium transition-all duration-200`;
             
@@ -647,7 +672,6 @@ function checkPhase1Completion() {
     }
 }
 
-// ⚙️ [ปรับปรุง] ระบบ Fuzzy/Keyword Matching ใจดีขึ้น เด็กไม่ต้องลากเป๊ะก็ถูกได้ง่ายๆ
 function evaluatePhase1() {
     const currentCase = selectedCases[currentCaseIndex];
     let correctCount = 0;
@@ -657,7 +681,6 @@ function evaluatePhase1() {
         const userAns = currentEvidence[key].toLowerCase().trim();
         const keywordTarget = currentCase.targets[key].toLowerCase().trim();
         
-        // ขอแค่คำที่เด็กไฮไลต์มีคีย์เวิร์ดผสมอยู่ หรือ คีย์เวิร์ดไปผสมอยู่ในคำที่เด็กไฮไลต์ ก็นับว่า "ถูก" ทันที
         if (userAns.includes(keywordTarget) || keywordTarget.includes(userAns)) {
             correctCount++;
         }
@@ -665,7 +688,6 @@ function evaluatePhase1() {
 
     const feedback = document.getElementById("feedback-message");
     if (feedback) {
-        // ใจดีมาก: ถูกแค่ 3 หมวดขึ้นไปจาก 5 หมวด ก็แจกพลัง 2 ดาวเต็มแล้วครับ! ไม่ตึงเกินไปสำหรับเด็ก
         if (correctCount >= 3) {
             score += 2;
             feedback.innerText = `✅ วิเคราะห์หลักฐาน 5W สำเร็จ! ถูกต้อง ${correctCount}/5 หมวด ได้รับพลังการสืบสวน ⭐⭐`;
@@ -677,6 +699,7 @@ function evaluatePhase1() {
         }
     }
 
+    updateGlobalScoreUI(); // 🔔 อัปเดตแต้มทันทีหลังไฮไลต์เสร็จ
     openPhase2();
 }
 
@@ -723,16 +746,11 @@ function selectQuizAnswer(selectedIndex, correctIndex) {
         if (feedback) feedback.innerText = "❌ เลือกแนวทางแก้ไขไม่ตรงจุดวิศวกรรม (ไม่ได้ดาวเพิ่มในเฟสนี้)";
     }
 
-    // ==========================================
-    // 🔍 ปรับปรุงจุดนี้: บังคับงอกแผงเฉลยต่อท้ายช้อยส์ตัวเลือกทันที
-    // ==========================================
+    // 🔔 แสดงแผงเฉลย 5W ต่อท้ายช้อยส์ตัวเลือกทันทีการันตีความชัวร์
     const currentCase = selectedCases[currentCaseIndex];
-    
-    // ลบกล่องเฉลยเก่าออกก่อนเพื่อป้องกันการซ้อนกัน
     const oldPanel = document.getElementById("solution-panel");
     if (oldPanel) oldPanel.remove();
 
-    // สร้างกล่องข้อความเฉลยชุดใหม่
     const solutionBox = document.createElement("div");
     solutionBox.id = "solution-panel";
     solutionBox.className = "mt-4 p-4 rounded-lg bg-slate-900 border border-slate-700 text-sm clear-both";
@@ -765,13 +783,12 @@ function selectQuizAnswer(selectedIndex, correctIndex) {
         </div>
     `;
 
-    // แทรกต่อท้ายช้อยส์ตัวเลือก (optionsContainer) ทันที ปลอดภัยและแสดงผลชัวร์ครับ
     optionsContainer.parentNode.insertBefore(solutionBox, optionsContainer.nextSibling);
-    // ==========================================
 
-    safelySetText("current-stars", `⭐ คะแนนรวมสะสมปัจจุบัน: ${score}`);
+    updateGlobalScoreUI(); // 🔔 อัปเดตแต้มรวมให้โชว์ตลอดเวลา
     safelyToggleDisplay("btn-next-case", true);
 }
+
 function nextCase() {
     currentCaseIndex++;
     if (currentCaseIndex < 10) {
@@ -792,7 +809,7 @@ function endGame() {
     const evaluationMsg = document.getElementById("end-evaluation-msg");
     const controlsContainer = document.getElementById("end-controls");
 
-    if (score >= 18) { // ปรับเกณฑ์ผ่านลงมาเล็กน้อยให้เด็กไม่เครียดเกินไป (จากเดิม 20)
+    if (score >= 18) {
         if (endTitle) { endTitle.innerText = "🎉 ปฏิบัติการสำเร็จเสร็จสิ้น!"; endTitle.className = "text-3xl font-bold mb-2 text-emerald-400"; }
         if (endRank) { endRank.innerText = "🎖️ ยศนักสืบ: Engineering Master"; endRank.className = "text-2xl font-bold text-cyan-400 mb-4"; }
         if (evaluationMsg) { evaluationMsg.innerText = "ขอชื่นชม! เธอสกัดใจความสำคัญ 5W และระเบียบแนวทางแก้ปัญหาทางวิศวกรรมได้อย่างยอดเยี่ยม!"; evaluationMsg.className = "text-emerald-400 mb-6 font-bold text-lg"; }
