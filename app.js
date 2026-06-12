@@ -658,7 +658,8 @@ function evaluatePhase1() {
         const userAns = currentEvidence[key].toLowerCase().trim();
         const keywordTarget = currentCase.targets[key].toLowerCase().trim();
         
-        if (userAns.includes(keywordTarget) || keywordTarget.includes(userAns)) {
+        // 🔒 [ระบบป้องกันการโกง]: เช็กว่าคำของเด็กมีคีย์เวิร์ดไหม AND ความยาวคำที่ลากต้องไม่ยาวเกินไป (ไม่เกินความยาวเฉลย + 25 ตัวอักษร)
+        if (userAns.includes(keywordTarget) && userAns.length <= (keywordTarget.length + 25)) {
             correctCount++;
         }
     });
