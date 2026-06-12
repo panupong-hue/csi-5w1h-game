@@ -535,6 +535,9 @@ const toolStyles = {
 // [จุดเริ่มต้นครึ่งหลัง] ระบบฟังก์ชันหลัก (Game Core Logic)
 // ==========================================
 
+// ตัวแปรเพิ่มเข้ามาพิเศษเพื่อป้องกันการตรวจแต้มซ้ำในข้อเดียวกัน
+let isPhase1Evaluated = false; 
+
 // 🎯 ฟังก์ชันช่วยล็อกและอัปเดตคะแนนรวมสะสมให้แสดงบนหน้าจอตลอดเวลา
 function updateGlobalScoreUI() {
     safelySetText("current-stars", `⭐ คะแนนรวมสะสมปัจจุบัน: ${score} ดวง`);
@@ -546,6 +549,7 @@ function startGame() {
     currentPhase = 1;
     currentTool = "";
     currentEvidence = { who: "", what: "", when: "", where: "", why: "" };
+    isPhase1Evaluated = false; // รีเซ็ตสวิตช์ตัวบล็อกซ้ำ
     
     // สุ่มคดี 10 ข้อ
     selectedCases = [...caseBank].sort(() => 0.5 - Math.random()).slice(0, 10);
@@ -562,6 +566,7 @@ function loadCase() {
     currentPhase = 1;
     currentTool = "";
     currentEvidence = { who: "", what: "", when: "", where: "", why: "" };
+    isPhase1Evaluated = false; // 🔒 ปลดล็อกสวิตช์เพื่อให้ข้อใหม่นี้เริ่มตรวจแต้มได้ 1 ครั้ง
     
     const oldPanel = document.getElementById("solution-panel");
     if (oldPanel) oldPanel.remove();
@@ -605,6 +610,9 @@ function setTool(toolName) {
 }
 
 function handleTextSelection() {
+    // ถ้าตรวจคะแนนข้อนี้ไปแล้ว ห้ามลากไฮไลต์เพิ่มอีกเพื่อป้องกันบักแต้มเบิ้ล
+    if (isPhase1Evaluated) return; 
+
     if (!currentTool) {
         alert("🚨 กรุณาเลือกเครื่องมือปากกาไฮไลต์ (ด้านล่าง) ก่อนลากครอบข้อความครับ!");
         return;
@@ -650,6 +658,10 @@ function checkPhase1Completion() {
 }
 
 function evaluatePhase1() {
+    // 🔒 [ระบบล็อกบักดาวเกิน]: ถ้าข้อนี้เคยคิดคะแนนไฮไลต์ไปแล้ว ให้เด้งออกทันที ห้ามบวกแต้มเพิ่มซ้ำซ้อน
+    if (isPhase1Evaluated) return;
+    isPhase1Evaluated = true; // ล็อกทันทีว่าข้อนี้คิดเงินแล้วนะ!
+
     const currentCase = selectedCases[currentCaseIndex];
     let correctCount = 0;
 
@@ -658,7 +670,6 @@ function evaluatePhase1() {
         const userAns = currentEvidence[key].toLowerCase().trim();
         const keywordTarget = currentCase.targets[key].toLowerCase().trim();
         
-        // [ระบบป้องกันการโกง]: เช็กคำถูกต้อง และความยาวต้องไม่เกินคีย์เวิร์ดเฉลย + 25 ตัวอักษร
         if (userAns.includes(keywordTarget) && userAns.length <= (keywordTarget.length + 25)) {
             correctCount++;
         }
@@ -666,19 +677,16 @@ function evaluatePhase1() {
 
     const feedback = document.getElementById("feedback-message");
     if (feedback) {
-        // 🛠️ [ปรับเกณฑ์ใหม่ตามสั่ง]: ต้องถูกหมด 5/5 เท่านั้นถึงจะได้ 2 ดาว
         if (correctCount === 5) {
             score += 2;
             feedback.innerText = `🎯 สุดยอดนักสืบวิศวกรรม! ถูกต้องครบถ้วน 5/5 หมวด ได้รับพลังการสืบสวน ⭐⭐`;
             feedback.className = "mt-4 p-3 rounded text-center text-sm font-bold min-h-[44px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30";
         } 
-        // 🛠️ [ปรับเกณฑ์ใหม่ตามสั่ง]: ถูก 3 หรือ 4 หมวด จะได้ 1 ดาว
         else if (correctCount >= 3) {
             score += 1;
             feedback.innerText = `🔍 ผ่านเกณฑ์ขั้นต่ำ! ถูกต้อง ${correctCount}/5 หมวด ได้รับพลังการสืบสวน ⭐`;
             feedback.className = "mt-4 p-3 rounded text-center text-sm font-bold min-h-[44px] bg-amber-500/20 text-amber-400 border border-amber-500/30";
         } 
-        // 🛠️ ต่ำกว่า 3 หมวด ไม่ได้ดาวเลย
         else {
             feedback.innerText = `❌ รวบรวมเบาะแสเสร็จสิ้น (ถูกต้องเพียง ${correctCount}/5 หมวด) ยังไม่ผ่านเกณฑ์ทดสอบ 5W (ไม่ได้ดาว)`;
             feedback.className = "mt-4 p-3 rounded text-center text-sm font-bold min-h-[44px] bg-red-500/20 text-red-400 border border-red-500/30";
@@ -689,7 +697,6 @@ function evaluatePhase1() {
     openPhase2();
 }
 
-// 🛠️ ปรับปรุงจุดนี้: เพิ่มระบบสุ่มสลับตำแหน่งช้อยส์ปรนัยเพื่อไม่ให้ล็อกอยู่ที่ข้อ 2
 function openPhase2() {
     currentPhase = 2;
     const currentCase = selectedCases[currentCaseIndex];
@@ -701,28 +708,23 @@ function openPhase2() {
     if (optionsContainer) {
         optionsContainer.innerHTML = "";
         
-        // แปลงช้อยส์ให้อยู่ในรูป Object ที่เก็บข้อความและสถานะความถูกต้องเดิมไว้
         let mappedOptions = currentCase.quiz.a.map((optionText, index) => {
             return { text: optionText, isCorrect: index === currentCase.quiz.correct };
         });
         
-        // ทำการสับไพ่/สลับตำแหน่งช้อยส์แบบสุ่ม (Shuffle)
         mappedOptions.sort(() => 0.5 - Math.random());
         
-        // สร้างปุ่มตัวเลือกที่สลับตำแหน่งแล้ว
         mappedOptions.forEach((option, index) => {
             const btn = document.createElement("button");
             btn.innerText = `${index + 1}. ${option.text}`;
             btn.className = "w-full text-left p-3 rounded bg-slate-800 border border-slate-700 hover:bg-slate-700 transition cursor-pointer text-sm leading-relaxed text-slate-200";
             
-            // ส่งค่าสถานะความถูกต้อง (option.isCorrect) เข้าไปตรวจในฟังก์ชันโดยตรง ไม่ต้องพึ่งเลข Index ล็อกตายตัวอีกต่อไป
             btn.onclick = () => selectQuizAnswerDynamic(index, option.isCorrect, mappedOptions);
             optionsContainer.appendChild(btn);
         });
     }
 }
 
-// 🛠️ ฟังก์ชันตรวจคำตอบปรนัยแบบไดนามิก (รองรับการสลับช้อยส์)
 function selectQuizAnswerDynamic(selectedIndex, isCorrect, mappedOptions) {
     const optionsContainer = document.getElementById("quiz-options");
     if (!optionsContainer) return;
@@ -742,7 +744,6 @@ function selectQuizAnswerDynamic(selectedIndex, isCorrect, mappedOptions) {
     } else {
         options[selectedIndex].className = "w-full text-left p-3 rounded bg-red-500/20 border-2 border-red-500 text-red-300 text-sm leading-relaxed";
         
-        // ไฮไลต์สีเขียวบอกข้อที่ถูกต้องจริง ๆ ให้เด็กเห็น
         mappedOptions.forEach((opt, idx) => {
             if (opt.isCorrect && options[idx]) {
                 options[idx].className = "w-full text-left p-3 rounded bg-emerald-500/10 border border-emerald-500/50 text-emerald-400 font-bold text-sm leading-relaxed";
@@ -751,7 +752,6 @@ function selectQuizAnswerDynamic(selectedIndex, isCorrect, mappedOptions) {
         if (feedback) feedback.innerText = "❌ เลือกแนวทางแก้ไขไม่ตรงจุดวิศวกรรม (ไม่ได้ดาวเพิ่มในเฟสนี้)";
     }
 
-    // แสดงแผงเฉลย 5W ด้านล่างช้อยส์
     const currentCase = selectedCases[currentCaseIndex];
     const oldPanel = document.getElementById("solution-panel");
     if (oldPanel) oldPanel.remove();
