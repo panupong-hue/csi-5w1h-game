@@ -532,28 +532,6 @@ const toolStyles = {
 };
 
 // ==========================================
-// 3. ระบบฟังก์ชันหลัก (Game Core Logic)
-// ==========================================
-
-// ==========================================
-// [จุดเริ่มต้นครึ่งหลัง] ระบบฟังก์ชันหลัก (Game Core Logic)
-// ==========================================
-
-// 🎯 ฟังก์ชันช่วยล็อกและอัปเดตคะแนนรวมสะสมให้แสดงบนหน้าจอตลอดเวลา
-function updateGlobalScoreUI() {
-    safelySetText("current-stars", `⭐ คะแนนรวมสะสมปัจจุบัน: ${score} ดวง`);
-}
-
-// ==========================================
-// [จุดเริ่มต้นครึ่งหลัง] ระบบฟังก์ชันหลัก (Game Core Logic)
-// ==========================================
-
-// 🎯 ฟังก์ชันช่วยล็อกและอัปเดตคะแนนรวมสะสมให้แสดงบนหน้าจอตลอดเวลา
-function updateGlobalScoreUI() {
-    safelySetText("current-stars", `⭐ คะแนนรวมสะสมปัจจุบัน: ${score} ดวง`);
-}
-
-// ==========================================
 // [จุดเริ่มต้นครึ่งหลัง] ระบบฟังก์ชันหลัก (Game Core Logic)
 // ==========================================
 
@@ -672,6 +650,7 @@ function checkPhase1Completion() {
     }
 }
 
+// 🛠️ ปรับปรุงจุดนี้: เอาดาวความพยายามออก
 function evaluatePhase1() {
     const currentCase = selectedCases[currentCaseIndex];
     let correctCount = 0;
@@ -693,9 +672,9 @@ function evaluatePhase1() {
             feedback.innerText = `✅ วิเคราะห์หลักฐาน 5W สำเร็จ! ถูกต้อง ${correctCount}/5 หมวด ได้รับพลังการสืบสวน ⭐⭐`;
             feedback.className = "mt-4 p-3 rounded text-center text-sm font-bold min-h-[44px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30";
         } else {
-            score += 1;
-            feedback.innerText = `🔍 รวบรวมเบาะแสเสร็จสิ้น (ถูกต้อง ${correctCount}/5 หมวด) ได้รับดาวความพยายาม ⭐`;
-            feedback.className = "mt-4 p-3 rounded text-center text-sm font-bold min-h-[44px] bg-amber-500/20 text-amber-400 border border-amber-500/30";
+            // 🔔 เอาแต้มสะสมออก (score ไม่บวกเพิ่มแล้ว) และแจ้งเตือนให้สังเกตเฉลย
+            feedback.innerText = `🔍 รวบรวมเบาะแสเสร็จสิ้น (ถูกต้องเพียง ${correctCount}/5 หมวด) ยังวิเคราะห์ไม่ผ่านเกณฑ์ทดสอบ 5W`;
+            feedback.className = "mt-4 p-3 rounded text-center text-sm font-bold min-h-[44px] bg-red-500/20 text-red-400 border border-red-500/30";
         }
     }
 
