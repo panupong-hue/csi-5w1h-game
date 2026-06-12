@@ -658,7 +658,7 @@ function evaluatePhase1() {
         const userAns = currentEvidence[key].toLowerCase().trim();
         const keywordTarget = currentCase.targets[key].toLowerCase().trim();
         
-        // 🔒 [ระบบป้องกันการโกง]: เช็กว่าคำของเด็กมีคีย์เวิร์ดไหม AND ความยาวคำที่ลากต้องไม่ยาวเกินไป (ไม่เกินความยาวเฉลย + 25 ตัวอักษร)
+        // [ระบบป้องกันการโกง]: เช็กคำถูกต้อง และความยาวต้องไม่เกินคีย์เวิร์ดเฉลย + 25 ตัวอักษร
         if (userAns.includes(keywordTarget) && userAns.length <= (keywordTarget.length + 25)) {
             correctCount++;
         }
@@ -666,12 +666,21 @@ function evaluatePhase1() {
 
     const feedback = document.getElementById("feedback-message");
     if (feedback) {
-        if (correctCount >= 3) {
+        // 🛠️ [ปรับเกณฑ์ใหม่ตามสั่ง]: ต้องถูกหมด 5/5 เท่านั้นถึงจะได้ 2 ดาว
+        if (correctCount === 5) {
             score += 2;
-            feedback.innerText = `✅ วิเคราะห์หลักฐาน 5W สำเร็จ! ถูกต้อง ${correctCount}/5 หมวด ได้รับพลังการสืบสวน ⭐⭐`;
+            feedback.innerText = `🎯 สุดยอดนักสืบวิศวกรรม! ถูกต้องครบถ้วน 5/5 หมวด ได้รับพลังการสืบสวน ⭐⭐`;
             feedback.className = "mt-4 p-3 rounded text-center text-sm font-bold min-h-[44px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30";
-        } else {
-            feedback.innerText = `🔍 รวบรวมเบาะแสเสร็จสิ้น (ถูกต้องเพียง ${correctCount}/5 หมวด) ยังวิเคราะห์ไม่ผ่านเกณฑ์ทดสอบ 5W`;
+        } 
+        // 🛠️ [ปรับเกณฑ์ใหม่ตามสั่ง]: ถูก 3 หรือ 4 หมวด จะได้ 1 ดาว
+        else if (correctCount >= 3) {
+            score += 1;
+            feedback.innerText = `🔍 ผ่านเกณฑ์ขั้นต่ำ! ถูกต้อง ${correctCount}/5 หมวด ได้รับพลังการสืบสวน ⭐`;
+            feedback.className = "mt-4 p-3 rounded text-center text-sm font-bold min-h-[44px] bg-amber-500/20 text-amber-400 border border-amber-500/30";
+        } 
+        // 🛠️ ต่ำกว่า 3 หมวด ไม่ได้ดาวเลย
+        else {
+            feedback.innerText = `❌ รวบรวมเบาะแสเสร็จสิ้น (ถูกต้องเพียง ${correctCount}/5 หมวด) ยังไม่ผ่านเกณฑ์ทดสอบ 5W (ไม่ได้ดาว)`;
             feedback.className = "mt-4 p-3 rounded text-center text-sm font-bold min-h-[44px] bg-red-500/20 text-red-400 border border-red-500/30";
         }
     }
